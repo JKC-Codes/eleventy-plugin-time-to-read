@@ -30,6 +30,5 @@ module.exports = function(customOptions) {
 			throw new Error(`Time-to-read encountered an unrecognised option: ${option}`);
 		}
 	})
-	validateOptions(options);
-	return options;
+	return validateOptions(options);
 }
