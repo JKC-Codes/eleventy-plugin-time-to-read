@@ -7,6 +7,9 @@
 	"peerDependencies": {
 		"@11ty/eleventy": "^0.11.0"
 	},
+	"engines": {
+		"node": ">=13.0.0"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/JKC-Codes/eleventy-plugin-time-to-read.git"
