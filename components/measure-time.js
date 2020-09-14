@@ -100,8 +100,8 @@ function getUnitsOfTime(content, options) {
 
 function createNumberFormat(language, unit, unitDisplay, digits) {
 	return new Intl.NumberFormat(language,  {
-    style: 'unit',
-    unit: unit,
+		style: 'unit',
+		unit: unit,
 		unitDisplay: unitDisplay,
 		minimumIntegerDigits: digits
 	});
@@ -109,7 +109,7 @@ function createNumberFormat(language, unit, unitDisplay, digits) {
 
 function constructTimeToRead(content, options) {
 	const timeUnits = getUnitsOfTime(content, options);
-	const {hours, minutes, seconds, language, style, digits} = options;
+	const {hours, minutes, seconds, language, style, type, digits} = options;
 	let times =[];
 
 	function shouldDisplay(labelDisplay, label) {
@@ -136,7 +136,7 @@ function constructTimeToRead(content, options) {
 		times.push(template.format(timeUnits.seconds));
 	}
 
-	return new Intl.ListFormat(language, {type: 'unit', style: style}).format(times);
+	return new Intl.ListFormat(language, {type: type, style: style}).format(times);
 }
 
 module.exports = function(content, options) {

@@ -3,6 +3,7 @@ module.exports = {
 	speed: '1000 characters per minute',
 	language: 'en-GB',
 	style: 'long',
+	type: 'unit',
 	hours: 'auto',
 	minutes: true,
 	seconds: false,

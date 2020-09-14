@@ -33,6 +33,16 @@ function validateStyle(style) {
 	}
 }
 
+function validateType(type) {
+	const isString = typeof type === 'string';
+	const lowerCase = isString && type.toLowerCase();
+	const isValidString = lowerCase === 'unit' || lowerCase === 'conjunction';
+
+	if(!(isString && isValidString)) {
+		throw new Error(`Time-to-read's type option must be a string matching 'unit' or 'conjunction'. Received: ${type}`);
+	}
+}
+
 function validateLabel(label, optionKey) {
 	const isBoolean = typeof label === 'boolean';
 	const isAuto = typeof label === 'string' && label.toLowerCase() === 'auto';
@@ -72,6 +82,10 @@ module.exports = function(options) {
 
 			case 'style':
 				validateStyle(options[option]);
+			break;
+
+			case 'type':
+				validateType(options[option]);
 			break;
 
 			case 'hours':
