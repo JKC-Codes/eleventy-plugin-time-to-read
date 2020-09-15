@@ -1,24 +1,40 @@
 {
 	"name": "eleventy-plugin-time-to-read",
-	"version": "1.0.0",
-	"description": "An 11ty plugin for calculating the time to read a given text ",
-	"publishConfig": {},
+	"version": "0.1.0",
+	"description": "11ty plugin for estimating the time to read a given text. Supports multiple languages",
+	"keywords": [
+		"11ty",
+		"eleventy",
+		"eleventy-plugin",
+		"time",
+		"read",
+		"reading",
+		"word",
+		"count",
+		"speed"
+	],
+	"homepage": "https://github.com/JKC-Codes/eleventy-plugin-time-to-read#readme",
+	"bugs": {
+		"url": "https://github.com/JKC-Codes/eleventy-plugin-time-to-read/issues"
+	},
+	"license": "GPL-3.0-or-later",
+	"author": {
+		"name": "John Kemp-Cruz",
+		"url": "https://jkc.codes/"
+	},
+	"files": [
+		".eleventy.js",
+		"components/**"
+	],
 	"main": ".eleventy.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/JKC-Codes/eleventy-plugin-time-to-read.git"
+	},
 	"peerDependencies": {
 		"@11ty/eleventy": "^0.11.0"
 	},
 	"engines": {
 		"node": ">=13.0.0"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/JKC-Codes/eleventy-plugin-time-to-read.git"
-	},
-	"keywords": [],
-	"author": "John Kemp-Cruz (https://jkc.codes/)",
-	"license": "GPL-3.0-or-later",
-	"bugs": {
-		"url": "https://github.com/JKC-Codes/eleventy-plugin-time-to-read/issues"
-	},
-	"homepage": "https://github.com/JKC-Codes/eleventy-plugin-time-to-read#readme"
+	}
 }
