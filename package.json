@@ -1,6 +1,6 @@
 {
 	"name": "eleventy-plugin-time-to-read",
-	"version": "0.1.0",
+	"version": "0.0.0",
 	"description": "11ty plugin for estimating the time to read a given text. Supports multiple languages",
 	"keywords": [
 		"11ty",
@@ -11,7 +11,9 @@
 		"reading",
 		"word",
 		"count",
-		"speed"
+		"speed",
+		"how",
+		"long"
 	],
 	"homepage": "https://github.com/JKC-Codes/eleventy-plugin-time-to-read#readme",
 	"bugs": {
@@ -30,6 +32,13 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/JKC-Codes/eleventy-plugin-time-to-read.git"
+	},
+	"scripts": {
+		"test": "ava",
+		"prepublishOnly": "npm run test"
+	},
+	"devDependencies": {
+		"ava": "^3.12.1"
 	},
 	"peerDependencies": {
 		"@11ty/eleventy": "^0.11.0"
