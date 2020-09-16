@@ -2,6 +2,7 @@
 
 Time To Read is an [11ty](https://www.11ty.dev/) plugin that approximates how long it would take a user to read a given text and outputs the result in a choice of languages.
 
+
 ## Installation
 
 ```shell
@@ -77,7 +78,20 @@ Can also be entered when using a filter:
 - Default: 'en-GB'
 - Accepts: A string with a [Unicode BCP 47 language identifier](https://www.unicode.org/reports/tr35/tr35.html#BCP_47_Conformance).
 
-The language to use when outputting reading times. E.g. 'fr' (French), 'es' (Spanish), 'ru' (Russian), 'zh-Hans' (simplified Chinese), 'de-AT' (German as used in Austria).
+The language to use when outputting reading times, for example:
+
+- French --> fr
+- Spanish --> es
+- Russian --> ru
+- Simplified Chinese --> zh-hans
+- German as used in Austria --> de-AT
+
+Can also change the number script by using '-u-nu-':
+
+- en --> 3 minutes
+- zh --> 3分钟
+- zh-u-nu-hanidec --> 三分钟
+- en-u-nu-hanidec --> 三 minutes
 
 Accepts any language supported by your Node version's [Internationalisation API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation).
 
