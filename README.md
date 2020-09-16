@@ -1,6 +1,33 @@
 # Time To Read
 
-Time To Read is an [11ty](https://www.11ty.dev/) plugin that approximates how long it would take a user to read a given text and outputs the result in a choice of languages.
+Time To Read is an [11ty](https://www.11ty.dev/) plugin that approximates how long it would take a user to read a given text and outputs the result in your choice of language.
+
+```
+1 minute
+3 minutes
+1 min
+3 mins
+3m
+3 minutos
+3 मिनट
+3 минуты
+三分钟
+```
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+	- [Speed](#speed)
+	- [Language](#language)
+	- [Style](#style)
+	- [Type](#type)
+	- [Hours](#hours)
+	- [Minutes](#minutes)
+	- [Seconds](#seconds)
+	- [Prepend](#prepend)
+	- [Append](#append)
+	- [Digits](#digits)
+- [Examples](#examples)
 
 
 ## Installation
@@ -93,7 +120,7 @@ Can also change the number script by using '-u-nu-':
 - zh-u-nu-hanidec --> 三分钟
 - en-u-nu-hanidec --> 三 minutes
 
-Accepts any language supported by your Node version's [Internationalisation API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation).
+Accepts any language supported by your Node version's [Internationalisation API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
 
 Can also be entered when using a filter:
 ```liquid
@@ -123,21 +150,21 @@ The exact output depends on the language and style options. Some options may out
 - Default: 'auto'
 - Accepts: True, False or 'auto'
 
-Whether to show (True) or hide (False) the unit of time. Auto will only display the unit when it is greater than zero.
+Whether to show (True) or hide (False) hours. Auto will only display hours when they are greater than zero.
 
 ### Minutes
 
 - Default: 'True'
 - Accepts: True, False or 'auto'
 
-Whether to show (True) or hide (False) the unit of time. Auto will only display the unit when it is greater than zero.
+Whether to show (True) or hide (False) minutes. Auto will only display minutes when they are greater than zero.
 
 ### Seconds
 
 - Default: 'False'
 - Accepts: True, False, 'auto' or 'only'
 
-Whether to show (True) or hide (False) the unit of time. Auto will only display the unit when it is greater than zero.
+Whether to show (True) or hide (False) seconds. Auto will only display seconds when they are greater than zero.
 
 Only will display the seconds without a label and hide all other text including other time units, the 'seconds' label and any pre/appends. E.g. 10, 37, 454
 
@@ -148,7 +175,7 @@ Only will display the seconds without a label and hide all other text including 
 
 Adds a string to the beginning of Time To Read's output. E.g. 'About 3 minutes', '~3 minutes'
 
-Does not add spaces automatically.
+Does not add spaces automatically. Will not be translated.
 
 ### Append
 
@@ -157,7 +184,7 @@ Does not add spaces automatically.
 
 Adds a string to the end of Time To Read's output. E.g. '3 minutes to read', '3 minutes-ish'
 
-Does not add spaces automatically.
+Does not add spaces automatically. Will not be translated.
 
 ### Digits
 
