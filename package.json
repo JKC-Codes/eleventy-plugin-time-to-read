@@ -12,8 +12,12 @@
 		"word",
 		"count",
 		"speed",
+		"words per minute",
+		"wpm",
 		"how",
-		"long"
+		"long",
+		"length",
+		"estimate"
 	],
 	"homepage": "https://github.com/JKC-Codes/eleventy-plugin-time-to-read#readme",
 	"bugs": {
