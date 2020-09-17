@@ -65,7 +65,7 @@ function validateDigits(digits) {
 	const isInteger = Number.isInteger(digitsAsNumber);
 	const isWithinRange = digitsAsNumber >= 1 && digitsAsNumber <= 21;
 	if(!isInteger || !isWithinRange) {
-		throw new Error(`Time-to-read's digits option must be an integer from 1 to 21. Received: ${digit}`);
+		throw new Error(`Time-to-read's digits option must be an integer from 1 to 21. Received: ${digits}`);
 	}
 }
 
