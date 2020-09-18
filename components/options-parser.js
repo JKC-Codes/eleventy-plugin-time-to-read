@@ -27,9 +27,14 @@ function isHandlebarsHelper(option) {
 	})
 }
 
+function isJSArgument(option) {
+	if(typeof option === 'object') {
+		return true;
+	}
+}
+
 module.exports = function(customOptions) {
-	// Create object from instance options array
-	const options = {};
+	let options = {};
 	customOptions.forEach(option => {
 		if(isSpeed(option)) {
 			options.speed = option;
@@ -39,6 +44,9 @@ module.exports = function(customOptions) {
 		}
 		else if(isHandlebarsHelper(option)) {
 			return;
+		}
+		else if(isJSArgument(option)) {
+			Object.assign(options, option);
 		}
 		else {
 			throw new Error(`Time-to-read encountered an unrecognised option: ${option}`);
