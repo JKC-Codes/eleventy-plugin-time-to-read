@@ -1,6 +1,6 @@
 # Time To Read
 
-Time To Read is an [11ty](https://www.11ty.dev/) plugin that approximates how long it would take a user to read a given text and outputs the result in your choice of language.
+An [11ty](https://www.11ty.dev/) plugin that approximates how long it would take a user to read a given text and outputs the result in your choice of language.
 
 ```
 1 minute
@@ -35,6 +35,9 @@ Time To Read is an [11ty](https://www.11ty.dev/) plugin that approximates how lo
 ```shell
 npm install eleventy-plugin-time-to-read
 ```
+
+**Note: requires Node 13.0.0 or greater**
+
 
 ## Usage
 
