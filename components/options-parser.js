@@ -16,6 +16,17 @@ function isLanguage(option) {
 	}
 }
 
+function isHandlebarsHelper(option) {
+	if(typeof option !== 'object') { return false; }
+
+	const optionKeys = Object.keys(option);
+	const handlebarKeys = ['lookupProperty', 'name', 'hash', 'data', 'loc'];
+
+	return handlebarKeys.every(key => {
+		return optionKeys.includes(key);
+	})
+}
+
 module.exports = function(customOptions) {
 	// Create object from instance options array
 	const options = {};
@@ -25,6 +36,9 @@ module.exports = function(customOptions) {
 		}
 		else if(isLanguage(option)) {
 			options.language = option;
+		}
+		else if(isHandlebarsHelper(option)) {
+			return;
 		}
 		else {
 			throw new Error(`Time-to-read encountered an unrecognised option: ${option}`);
