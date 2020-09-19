@@ -114,15 +114,15 @@ Can also be entered when using a filter:
 
 ### Language
 - Default: 'en'
-- Accepts: A string with a [Unicode BCP 47 language identifier](https://www.unicode.org/reports/tr35/tr35.html#BCP_47_Conformance).
+- Accepts: A string with a [Unicode BCP 47 language identifier](https://www.unicode.org/reports/tr35/tr35.html#BCP_47_Conformance). E.g. 'en', 'es', 'fr', 'ru', 'hi', 'zh'.
 
 The language to use when outputting reading times, for example:
 
-- French = fr
-- Spanish = es
-- Russian = ru
-- Simplified Chinese = zh-hans
-- German as used in Austria = de-AT
+- fr = French
+- es = Spanish
+- ru = Russian
+- zh-hans = Simplified Chinese
+- de-AT = German as used in Austria
 
 Can also change the number script by using '-u-nu-':
 
