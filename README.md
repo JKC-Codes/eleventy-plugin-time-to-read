@@ -86,8 +86,16 @@ const timeToRead = require('eleventy-plugin-time-to-read');
 
 module.exports = function(eleventyConfig) {
 	eleventyConfig.addPlugin(timeToRead, {
-		// 'key: value',
-		// 'key: value',
+		speed: '1000 characters per minute',
+		language: 'en',
+		style: 'long',
+		type: 'unit',
+		hours: 'auto',
+		minutes: true,
+		seconds: false,
+		prepend: null,
+		append: null,
+		digits: 1,
 	});
 }
 ```
@@ -105,23 +113,23 @@ Can also be entered when using a filter:
 ```
 
 ### Language
-- Default: 'en-GB'
+- Default: 'en'
 - Accepts: A string with a [Unicode BCP 47 language identifier](https://www.unicode.org/reports/tr35/tr35.html#BCP_47_Conformance).
 
 The language to use when outputting reading times, for example:
 
-- French --> fr
-- Spanish --> es
-- Russian --> ru
-- Simplified Chinese --> zh-hans
-- German as used in Austria --> de-AT
+- French = fr
+- Spanish = es
+- Russian = ru
+- Simplified Chinese = zh-hans
+- German as used in Austria = de-AT
 
 Can also change the number script by using '-u-nu-':
 
-- en --> 3 minutes
-- zh --> 3分钟
-- zh-u-nu-hanidec --> 三分钟
-- en-u-nu-hanidec --> 三 minutes
+- en = 3 minutes
+- zh = 3分钟
+- zh-u-nu-hanidec = 三分钟
+- en-u-nu-hanidec = 三 minutes
 
 Accepts any language supported by your Node version's [Internationalisation API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
 
