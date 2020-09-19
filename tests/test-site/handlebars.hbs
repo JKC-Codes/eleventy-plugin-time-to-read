@@ -1,0 +1,9 @@
+---
+title: 'Handlebars'
+---
+
+<ul>
+	{{#each tests}}
+		<li>{{this.title}}: {{timeToRead this.text}}</li>
+	{{/each}}
+</ul>
