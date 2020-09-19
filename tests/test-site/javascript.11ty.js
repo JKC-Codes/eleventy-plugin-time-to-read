@@ -7,9 +7,9 @@ class page {
 
 	render({tests}) {
 		const html = tests.reduce((acc, cur) => {
-			return acc + `<li>${cur.title}: ${this.timeToRead(cur.text)}</li>`;
+			return acc + `\n\t\t<li>${cur.title}: ${this.timeToRead(cur.text)}</li>\n\t\t<li>${cur.title}: ${this.timeToRead(cur.text, 'zh', '100 words per minute')}</li>`;
 		}, '');
-		return `<ul>${html}</ul>`;
+		return `\n<ul>${html}\n</ul>`;
 	}
 }
 
