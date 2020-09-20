@@ -6,7 +6,6 @@ An [11ty](https://www.11ty.dev/) plugin that approximates how long it would take
 1 minute
 3 minutes
 1 min
-3 mins
 3m
 3 minutos
 3 मिनट
