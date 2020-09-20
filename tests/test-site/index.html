@@ -1,0 +1,63 @@
+---
+title: Tests
+eleventyExcludeFromCollections: true
+---
+
+<ul id="list">
+	{%- for page in collections.all %}
+		<li class="test">
+			<a href="{{ page.url }}" class="title">{{ page.data.title }}</a> &mdash; <span class="status">checking status&hellip;</span>
+			{{ page.templateContent }}
+		</li>
+	{%- endfor %}
+</ul>
+
+<script>
+	const list = document.querySelector('#list');
+	const tests = Array.from(document.querySelectorAll('.test'));
+
+	// Sort list into alphabetical order
+	tests.sort((a, b) => {
+		const titleA = a.querySelector('.title').innerText;
+		const titleB = b.querySelector('.title').innerText;
+		return titleA > titleB;
+	});
+	list.innerHTML = '';
+	tests.forEach(test => {
+		list.appendChild(test);
+	});
+
+	// Display status
+	const controlArgs = [
+		"1000 characters: 2分钟",
+		"5000 characters: 8分钟",
+		"250 words: 3分钟",
+		"1000 words: 10分钟"
+	];
+	const controlNoArgs = [
+		"1000 characters: 1 minute",
+		"5000 characters: 4 minutes",
+		"250 words: 1 minute",
+		"1000 words: 6 minutes"
+	];
+
+	tests.forEach(test => {
+		const hasArgs = test.querySelector('.title').textContent.includes('with arguments');
+		const control = hasArgs ? controlArgs:controlNoArgs;
+		const listItems = Array.from(test.querySelectorAll('li'));
+		const allMatchControl = listItems.every((listItem, index) => {
+			return listItem.textContent === control[index];
+		});
+		const status = test.querySelector('.status');
+
+		if(allMatchControl) {
+			status.textContent = 'Passing';
+			status.style.color = 'green';
+			test.removeChild(test.querySelector('ul'));
+		}
+		else {
+			status.textContent = 'Failing';
+			status.style.color = 'red';
+		}
+	});
+</script>

@@ -1,0 +1,9 @@
+---
+title: 'Liquid with arguments'
+---
+
+<ul>
+	{%- for test in tests %}
+		<li>{{ test.title }}: {{ test.text | timeToRead: 'zh', '100 words per minute' }}</li>
+	{%- endfor %}
+</ul>

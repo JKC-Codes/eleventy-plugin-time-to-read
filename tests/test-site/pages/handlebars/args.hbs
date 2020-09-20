@@ -1,10 +1,9 @@
 ---
-title: 'Handlebars'
+title: 'Handlebars with arguments'
 ---
 
 <ul>
 	{{#each tests}}
-		<li>{{this.title}}: {{timeToRead this.text}}</li>
 		<li>{{this.title}}: {{timeToRead this.text 'zh' '100 words per minute'}}</li>
 	{{/each}}
 </ul>
