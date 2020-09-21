@@ -9,19 +9,9 @@ test('accepts valid speed arguments', t => {
 });
 
 test('accepts valid language arguments', t => {
-	const validatorError = `The locale used in time-to-read's language option (en) is not supported`;
-	try {
+	t.notThrows(()=> {
 		parser(['en']);
-		t.pass();
-	}
-	catch(error) {
-		if(error.message === validatorError) {
-			t.pass();
-		}
-		else {
-			t.fail(error.message);
-		}
-	}
+	});
 });
 
 test('accepts object arguments', t => {
@@ -47,9 +37,9 @@ test('rejects invalid speed arguments', t => {
 	});
 });
 
-test('rejects invlaid language arguments', t => {
+test('rejects invalid language arguments', t => {
 	t.throws(() => {
-		parser(['language-foo'])
+		parser(['en_us'])
 	});
 });
 
