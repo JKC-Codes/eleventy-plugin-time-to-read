@@ -122,7 +122,6 @@ The language to use when outputting reading times, for example:
 - es = Spanish
 - ru = Russian
 - zh-hans = Simplified Chinese
-- de-AT = German as used in Austria
 
 Can also change the number script by using '-u-nu-':
 
