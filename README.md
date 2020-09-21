@@ -36,18 +36,18 @@ An [11ty](https://www.11ty.dev/) plugin that approximates how long it would take
 npm install eleventy-plugin-time-to-read
 ```
 
-**Note: requires Node 13.0.0 or greater**
+**Requires Node 13.0.0 or greater**
 
 
 ## Usage
 
 In your [Eleventy config file](https://www.11ty.dev/docs/config/) (`.eleventy.js` by default):
 ```js
-const time-to-read = require('eleventy-plugin-time-to-read');
+const timeToRead = require('eleventy-plugin-time-to-read');
 
 module.exports = function(eleventyConfig) {
 	// other config options
-	eleventyConfig.addPlugin(time-to-read);
+	eleventyConfig.addPlugin(timeToRead);
 	// other config options
 }
 ```
