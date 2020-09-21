@@ -63,3 +63,15 @@ test('rejects boolean arguments', t => {
 		parser([false])
 	});
 });
+
+test('returns arguments as an object', t => {
+	const speedTest = parser(['250 words a minute']);
+	const languageTest = parser(['en']);
+	const objectTest = parser(['1000 characters per hour', 'hi']);
+
+	t.is(typeof objectTest, 'object');
+	t.is(speedTest.speed, '250 words a minute');
+	t.is(languageTest.language, 'en');
+	t.is(objectTest.speed, '1000 characters per hour');
+	t.is(objectTest.language, 'hi');
+});
