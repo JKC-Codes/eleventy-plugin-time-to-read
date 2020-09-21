@@ -22,8 +22,7 @@ function parseSpeedOption(speedOption) {
 	};
 }
 
-function calculateSeconds(content, speed) {
-	const text = convertToPlainText(content);
+function calculateSeconds(text, speed) {
 	const { amount, measure, interval } = parseSpeedOption(speed);
 	let subject;
 	if(measure === 'words') {
@@ -45,14 +44,14 @@ function calculateSeconds(content, speed) {
 	return Math.ceil(count);
 }
 
-function getUnitsOfTime(content, options) {
+function getUnitsOfTime(text, options) {
 	const {
 		speed,
 		hours: displayHours,
 		minutes: displayMinutes,
 		seconds: displaySeconds
 	} = options;
-	let remainingSeconds = calculateSeconds(content, speed);
+	let remainingSeconds = calculateSeconds(text, speed);
 	let hours;
 	let minutes;
 	let seconds;
@@ -107,8 +106,8 @@ function createNumberFormat(language, unit, unitDisplay, digits) {
 	});
 }
 
-function constructTimeToRead(content, options) {
-	const timeUnits = getUnitsOfTime(content, options);
+function constructTimeToRead(text, options) {
+	const timeUnits = getUnitsOfTime(text, options);
 	const {hours, minutes, seconds, language, style, type, digits} = options;
 	let times =[];
 
@@ -140,10 +139,11 @@ function constructTimeToRead(content, options) {
 }
 
 module.exports = function(content, options) {
-	const timeToRead = constructTimeToRead(content, options);
+	const text = convertToPlainText(content);
+	const timeToRead = constructTimeToRead(text, options);
 
 	if(typeof options.seconds === 'string' && options.seconds.toLowerCase() === 'only') {
-		return calculateSeconds(content, options.speed);
+		return calculateSeconds(text, options.speed);
 	}
 
 	let sentence = timeToRead;
