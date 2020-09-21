@@ -27,7 +27,7 @@ function isHandlebarsHelper(option) {
 }
 
 function isJSArgument(option) {
-	if(typeof option === 'object') {
+	if(typeof option === 'object' && !Array.isArray(option)) {
 		return true;
 	}
 }
