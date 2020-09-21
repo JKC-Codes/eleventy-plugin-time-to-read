@@ -5,6 +5,7 @@ const parser = require('../components/options-parser.js');
 test('returns valid speed argument as object', t => {
 	const testArgument1 = '250 words a minute';
 	const testArgument2 = '0.9 characters per second';
+
 	t.is(parser([testArgument1]).speed, testArgument1);
 	t.is(parser([testArgument2]).speed, testArgument2);
 });
@@ -12,14 +13,35 @@ test('returns valid speed argument as object', t => {
 test('returns valid language argument as object', t => {
 	const testArgument1 = 'en';
 	const testArgument2 = 'zh-u-nu-hanidec';
+
 	t.is(parser([testArgument1]).language, testArgument1);
 	t.is(parser([testArgument2]).language, testArgument2);
 });
 
 test('returns array of arguments as object', t => {
 	const testArgument = ['1000 characters per hour', 'hi'];
+
 	t.is(parser(testArgument).speed, testArgument[0]);
 	t.is(parser(testArgument).language, testArgument[1]);
+});
+
+test('ignores handlebars helper', t => {
+	const testArgument = {
+		lookupProperty: '[Function: lookupProperty]',
+		name: 'timeToRead',
+		hash: {},
+		data: {
+			root: '[Object]',
+			_parent: '[Object]',
+			key: 3,
+			index: 3,
+			first: false,
+			last: true
+		},
+		loc: { start: '[Object]', end: '[Object]' }
+	}
+
+	t.is(Object.keys(parser([testArgument])).length, 0);
 });
 
 test('accepts object argument', t => {
@@ -35,6 +57,7 @@ test('accepts object argument', t => {
 		append: null,
 		digits: 1
 	};
+
 	t.is(parser([testArgument]).speed, testArgument.speed);
 	t.is(parser([testArgument]).language, testArgument.language);
 	t.is(parser([testArgument]).style, testArgument.style);
@@ -45,43 +68,4 @@ test('accepts object argument', t => {
 	t.is(parser([testArgument]).prepend, testArgument.prepend);
 	t.is(parser([testArgument]).append, testArgument.append);
 	t.is(parser([testArgument]).digits, testArgument.digits);
-});
-
-test('rejects invalid speed argument', t => {
-	t.throws(() => {
-		parser(['0 words a minute'])
-	});
-	t.throws(() => {
-		parser(['250 chars a minute'])
-	});
-	t.throws(() => {
-		parser(['250 words a min'])
-	});
-});
-
-test('rejects invalid language argument', t => {
-	t.throws(() => {
-		parser(['en_us'])
-	});
-});
-
-test('rejects array argument', t => {
-	t.throws(() => {
-		parser([['250 words per minute', 'en']])
-	});
-});
-
-test('rejects number argument', t => {
-	t.throws(() => {
-		parser([123])
-	});
-});
-
-test('rejects boolean argument', t => {
-	t.throws(() => {
-		parser([true])
-	});
-	t.throws(() => {
-		parser([false])
-	});
 });
