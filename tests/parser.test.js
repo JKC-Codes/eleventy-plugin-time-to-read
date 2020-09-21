@@ -3,13 +3,17 @@ const parser = require('../components/options-parser.js');
 
 
 test('returns valid speed argument as object', t => {
-	const testArgument = '250 words a minute';
-	t.is(parser([testArgument]).speed, testArgument);
+	const testArgument1 = '250 words a minute';
+	const testArgument2 = '0.9 characters per second';
+	t.is(parser([testArgument1]).speed, testArgument1);
+	t.is(parser([testArgument2]).speed, testArgument2);
 });
 
 test('returns valid language argument as object', t => {
-	const testArgument = 'en';
-	t.is(parser([testArgument]).language, testArgument);
+	const testArgument1 = 'en';
+	const testArgument2 = 'zh-u-nu-hanidec';
+	t.is(parser([testArgument1]).language, testArgument1);
+	t.is(parser([testArgument2]).language, testArgument2);
 });
 
 test('returns array of arguments as object', t => {
