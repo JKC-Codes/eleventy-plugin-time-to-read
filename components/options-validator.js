@@ -2,7 +2,12 @@ const regEx = require('./regular-expressions.js');
 
 function validateSpeed(speed) {
 	if(typeof speed !== 'string' || !new RegExp(regEx.speed,'i').test(speed)) {
-		throw new Error(`Time-to-read's speed option must be a space separated string matching: [Number greater than 0] ['words' or 'characters'] ['a', 'an' or 'per'] ['hour', 'minute' or 'second']. Received: ${speed}`);
+		throw new Error(`Time-to-read's speed option must be a space separated string matching: [Number greater than 0] ['words' or 'characters'] ['hour', 'minute' or 'second']. Received: ${speed}`);
+	}
+
+	const speedNumber = speed.match(new RegExp(regEx.speedUnitAmount,'i'))[0];
+	if(speedNumber <= 0) {
+		throw new Error(`Time-to-read's speed option must be greater than 0`);
 	}
 }
 
