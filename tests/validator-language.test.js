@@ -2,7 +2,6 @@ const test = require('ava');
 const validator = require('../components/options-validator.js');
 
 
-// Argument types
 test('accepts language code as language', t => {
 	const testArgument1 = 'en';
 	const testArgument2 = 'en-gb';
