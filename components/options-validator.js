@@ -82,6 +82,12 @@ function validateDigits(digits) {
 
 module.exports = function(options) {
 	for(option in options) {
+		// Prevent undefined overwriting defaults
+		if(options[option] === undefined) {
+			delete options[option];
+			continue;
+		}
+
 		switch(option) {
 			case 'speed':
 				validateSpeed(options[option]);
