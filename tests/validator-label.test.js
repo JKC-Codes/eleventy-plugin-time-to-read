@@ -2,51 +2,6 @@ const test = require('ava');
 const validator = require('../components/options-validator.js');
 
 
-// Argument types
-test('rejects number as label option', t => {
-	t.throws(()=> {
-		validator({ hours: 250 });
-	});
-
-	t.throws(()=> {
-		validator({ minutes: 250 });
-	});
-
-	t.throws(()=> {
-		validator({ seconds: 250 });
-	});
-});
-
-test('rejects array as label option', t => {
-	t.throws(()=> {
-		validator({ hours: [true, false] });
-	});
-
-	t.throws(()=> {
-		validator({ minutes: [true, false] });
-	});
-
-	t.throws(()=> {
-		validator({ seconds: [true, false] });
-	});
-});
-
-test('rejects object as label option', t => {
-	t.throws(()=> {
-		validator({ hours: {display: 'auto'}	});
-	});
-
-	t.throws(()=> {
-		validator({ minutes: {display: 'auto'}	});
-	});
-
-	t.throws(()=> {
-		validator({ seconds: {display: 'auto'}	});
-	});
-});
-
-
-// Argument values
 test('accepts True as label', t => {
 	const testArgument = true;
 	t.is(validator({ hours: testArgument }).hours, testArgument);
@@ -125,5 +80,48 @@ test('rejects invalid labels', t => {
 
 	t.throws(()=> {
 		validator({	seconds: 0 });
+	});
+});
+
+
+test('rejects invalid label argument types', t => {
+	t.throws(()=> {
+		validator({ hours: 250 });
+	});
+	t.throws(()=> {
+		validator({ minutes: 250 });
+	});
+	t.throws(()=> {
+		validator({ seconds: 250 });
+	});
+
+	t.throws(()=> {
+		validator({ hours: [true, false] });
+	});
+	t.throws(()=> {
+		validator({ minutes: [true, false] });
+	});
+	t.throws(()=> {
+		validator({ seconds: [true, false] });
+	});
+
+	t.throws(()=> {
+		validator({ hours: {display: 'auto'} });
+	});
+	t.throws(()=> {
+		validator({ minutes: {display: 'auto'} });
+	});
+	t.throws(()=> {
+		validator({ seconds: {display: 'auto'} });
+	});
+
+	t.throws(()=> {
+		validator({ hours: null	});
+	});
+	t.throws(()=> {
+		validator({ minutes: null	});
+	});
+	t.throws(()=> {
+		validator({ seconds: null	});
 	});
 });

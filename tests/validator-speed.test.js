@@ -2,41 +2,6 @@ const test = require('ava');
 const validator = require('../components/options-validator.js');
 
 
-// Argument types
-test('accepts string as speed option', t => {
-	const testArgument = '250 words a minute';
-	t.is(validator({ speed: testArgument }).speed, testArgument);
-});
-
-test('rejects number as speed option', t => {
-	t.throws(()=> {
-		validator({ speed: 250 });
-	});
-});
-
-test('rejects array as speed option', t => {
-	t.throws(()=> {
-		validator({ speed: ['250', 'words', 'minute'] });
-	});
-});
-
-test('rejects object as speed option', t => {
-	t.throws(()=> {
-		validator({ speed: {number: 250}	});
-	});
-});
-
-test('rejects boolean as speed option', t => {
-	t.throws(()=> {
-		validator({ speed: true	});
-	});
-
-	t.throws(()=> {
-		validator({	speed: false });
-	});
-});
-
-
 // Number unit
 test('accepts speed number as integer', t => {
 	const testArgument1 = '250 words a minute';
@@ -132,5 +97,33 @@ test('rejects invalid speed time unit', t => {
 
 	t.throws(()=> {
 		validator({	speed: '250 words a sec' });
+	});
+});
+
+
+// Argument types
+test('rejects invalid speed argument types', t => {
+	t.throws(()=> {
+		validator({ speed: 250 });
+	});
+
+	t.throws(()=> {
+		validator({ speed: ['250', 'words', 'minute'] });
+	});
+
+	t.throws(()=> {
+		validator({ speed: {number: 250} });
+	});
+
+	t.throws(()=> {
+		validator({ speed: null	});
+	});
+
+	t.throws(()=> {
+		validator({ speed: true	});
+	});
+
+	t.throws(()=> {
+		validator({	speed: false });
 	});
 });

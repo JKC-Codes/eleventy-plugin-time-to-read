@@ -8,6 +8,7 @@ test('accepts language code as language', t => {
 	const testArgument2 = 'en-gb';
 	const testArgument3 = 'zh-hans';
 	const testArgument4 = 'zh-u-nu-hanidec';
+
 	t.is(validator({ language: testArgument1 }).language, testArgument1);
 	t.is(validator({ language: testArgument2 }).language, testArgument2);
 	t.is(validator({ language: testArgument3 }).language, testArgument3);
@@ -26,27 +27,26 @@ test('rejects invalid language code as language', t => {
 	});
 });
 
-test('rejects number as language option', t => {
+
+test('rejects invalid language argument types', t => {
 	t.throws(()=> {
 		validator({ language: 250 });
 	});
-});
 
-test('rejects array as language option', t => {
 	t.throws(()=> {
 		validator({ language: ['en', 'zh'] });
 	});
-});
 
-test('rejects object as language option', t => {
 	t.throws(()=> {
 		validator({ language: {country: 'en'}	});
 	});
-});
 
-test('rejects boolean as language option', t => {
 	t.throws(()=> {
-		validator({ language: true	});
+		validator({	language: null });
+	});
+
+	t.throws(()=> {
+		validator({ language: true });
 	});
 
 	t.throws(()=> {

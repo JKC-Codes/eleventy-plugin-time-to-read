@@ -18,12 +18,6 @@ test('accepts Number as insert', t => {
 	t.is(validator({ append: testArgument }).append, testArgument);
 });
 
-test('accepts Undefined as insert', t => {
-	const testArgument = undefined;
-	t.is(validator({ prepend: testArgument }).prepend, testArgument);
-	t.is(validator({ append: testArgument }).append, testArgument);
-});
-
 test('accepts Null as insert', t => {
 	const testArgument = null;
 	t.is(validator({ prepend: testArgument }).prepend, testArgument);
@@ -43,18 +37,18 @@ test('rejects invalid insert argument types', t => {
 		validator({ append: {text: 'foo'}	});
 	});
 	t.throws(()=> {
-		validator({ prepend: {text: 'foo'}	});
+		validator({ prepend: {text: 'foo'} });
 	});
 
 	t.throws(()=> {
 		validator({ prepend: true	});
 	});
 	t.throws(()=> {
-		validator({ append: true	});
+		validator({ append: true });
 	});
 
 	t.throws(()=> {
-		validator({ prepend: false	});
+		validator({ prepend: false });
 	});
 	t.throws(()=> {
 		validator({ append: false	});

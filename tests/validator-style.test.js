@@ -2,42 +2,6 @@ const test = require('ava');
 const validator = require('../components/options-validator.js');
 
 
-// Argument types
-test('accepts string as style option', t => {
-	const testArgument = 'narrow';
-	t.is(validator({ style: testArgument }).style, testArgument);
-});
-
-test('rejects number as style option', t => {
-	t.throws(()=> {
-		validator({ style: 250 });
-	});
-});
-
-test('rejects array as style option', t => {
-	t.throws(()=> {
-		validator({ style: ['narrow', 'short', 'long'] });
-	});
-});
-
-test('rejects object as style option', t => {
-	t.throws(()=> {
-		validator({ style: {type: 'narrow'}	});
-	});
-});
-
-test('rejects boolean as style option', t => {
-	t.throws(()=> {
-		validator({ style: true	});
-	});
-
-	t.throws(()=> {
-		validator({	style: false });
-	});
-});
-
-
-// Argument values
 test('accepts \'narrow\' as style', t => {
 	const testArgument = 'narrow';
 	t.is(validator({ style: testArgument }).style, testArgument);
@@ -64,5 +28,31 @@ test('rejects invalid styles', t => {
 
 	t.throws(()=> {
 		validator({	style: 'narro' });
+	});
+});
+
+
+test('rejects invalid style argument types', t => {
+	t.throws(()=> {
+		validator({ style: 250 });
+	});
+	t.throws(()=> {
+		validator({ style: ['narrow', 'short', 'long'] });
+	});
+
+	t.throws(()=> {
+		validator({ style: {type: 'narrow'}	});
+	});
+
+	t.throws(()=> {
+		validator({ style: null	});
+	});
+
+	t.throws(()=> {
+		validator({ style: true	});
+	});
+
+	t.throws(()=> {
+		validator({	style: false });
 	});
 });
