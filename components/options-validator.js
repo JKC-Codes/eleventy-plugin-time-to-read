@@ -71,9 +71,10 @@ function validateInserts(insert, optionKey) {
 }
 
 function validateDigits(digits) {
-	const digitsAsNumber = Number(digits);
-	const isInteger = Number.isInteger(digitsAsNumber);
-	const isWithinRange = digitsAsNumber >= 1 && digitsAsNumber <= 21;
+	const number = typeof digits === 'string' ? Number(digits) : digits;
+	const isInteger = Number.isInteger(number);
+	const isWithinRange = number >= 1 && number <= 21;
+
 	if(!isInteger || !isWithinRange) {
 		throw new Error(`Time-to-read's digits option must be an integer from 1 to 21. Received: ${digits}`);
 	}
