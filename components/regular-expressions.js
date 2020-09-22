@@ -1,14 +1,14 @@
 // Regex = 1 or more numbers
-const speedUnitAmount = String.raw`[0-9]+`;
+const speedUnitAmount = String.raw`[0-9]+(\.[0-9]+)?`;
 
 // Regex = 'characters' or 'words'
-const speedUnitMeasure = String.raw`(characters|words)`;
+const speedUnitMeasure = String.raw`(character|word)s?`;
 
 // Regex = 'per' or 'a' or 'an'
 const speedUnitPreposition = String.raw`(per|a|an)`;
 
 // Regex = 'hour' or 'minute' or 'second'
-const speedUnitInterval = String.raw`(hour|minute|second)`;
+const speedUnitInterval = String.raw`(hour|minute|second)s?`;
 
 // Regex = speedUnitAmount + ' ' + speedUnitMeasure + ' ' + optional speedUnitPreposition + speedUnitInterval
 const speed = String.raw`^${speedUnitAmount} ${speedUnitMeasure} (${speedUnitPreposition} )?${speedUnitInterval}$`;
