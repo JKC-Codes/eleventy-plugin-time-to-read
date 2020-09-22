@@ -39,7 +39,7 @@
 	},
 	"scripts": {
 		"eleventy": "npx @11ty/eleventy --config=eleventyTestSiteConfig.js",
-		"eleventy:test": "npm run eleventy --  --dryrun",
+		"eleventy:test": "npm run eleventy -- --dryrun --quiet",
 		"ava": "ava",
 		"test": "npm-run-all --parallel ava eleventy:test",
 		"prepublishOnly": "npm run test"

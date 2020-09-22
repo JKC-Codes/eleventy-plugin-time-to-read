@@ -2,7 +2,12 @@ const regEx = require('./regular-expressions.js');
 
 function validateSpeed(speed) {
 	if(typeof speed !== 'string' || !new RegExp(regEx.speed,'i').test(speed)) {
-		throw new Error(`Time-to-read's speed option must be a string matching: '(Number) ${regEx.speedUnitMeasure} optional ${regEx.speedUnitPreposition} ${regEx.speedUnitInterval}'. Received: ${speed}`);
+		throw new Error(`Time-to-read's speed option must be a space separated string matching: [Number greater than 0] ['words' or 'characters'] ['hour', 'minute' or 'second']. Received: ${speed}`);
+	}
+
+	const speedNumber = speed.match(new RegExp(regEx.speedUnitAmount,'i'))[0];
+	if(speedNumber <= 0) {
+		throw new Error(`Time-to-read's speed option must be greater than 0`);
 	}
 }
 
@@ -55,15 +60,21 @@ function validateLabel(label, optionKey) {
 }
 
 function validateInserts(insert, optionKey) {
-	if(typeof insert !== 'string' && insert !== null) {
+	const isString = typeof insert === 'string';
+	const isNumber = typeof insert === 'number';
+	const isUndefined = typeof insert === 'undefined';
+	const isNull = insert === null;
+
+	if(!(isString || isNumber || isUndefined || isNull)) {
 		throw new Error(`Time-to-read's ${optionKey} option must be a string. Received: ${insert}`);
 	}
 }
 
 function validateDigits(digits) {
-	const digitsAsNumber = Number(digits);
-	const isInteger = Number.isInteger(digitsAsNumber);
-	const isWithinRange = digitsAsNumber >= 1 && digitsAsNumber <= 21;
+	const number = typeof digits === 'string' ? Number(digits) : digits;
+	const isInteger = Number.isInteger(number);
+	const isWithinRange = number >= 1 && number <= 21;
+
 	if(!isInteger || !isWithinRange) {
 		throw new Error(`Time-to-read's digits option must be an integer from 1 to 21. Received: ${digits}`);
 	}
@@ -71,6 +82,12 @@ function validateDigits(digits) {
 
 module.exports = function(options) {
 	for(option in options) {
+		// Prevent undefined overwriting defaults
+		if(options[option] === undefined) {
+			delete options[option];
+			continue;
+		}
+
 		switch(option) {
 			case 'speed':
 				validateSpeed(options[option]);

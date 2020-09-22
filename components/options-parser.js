@@ -1,5 +1,4 @@
 const regEx = require('./regular-expressions.js');
-const validateOptions = require('./options-validator.js');
 
 function isSpeed(option) {
 	return new RegExp(regEx.speed,'i').test(option);
@@ -28,7 +27,7 @@ function isHandlebarsHelper(option) {
 }
 
 function isJSArgument(option) {
-	if(typeof option === 'object') {
+	if(typeof option === 'object' && !Array.isArray(option)) {
 		return true;
 	}
 }
@@ -52,5 +51,5 @@ module.exports = function(customOptions) {
 			throw new Error(`Time-to-read encountered an unrecognised option: ${option}`);
 		}
 	})
-	return validateOptions(options);
+	return options;
 }

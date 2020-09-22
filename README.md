@@ -35,18 +35,18 @@ An [11ty](https://www.11ty.dev/) plugin that approximates how long it would take
 npm install eleventy-plugin-time-to-read
 ```
 
-**Note: requires Node 13.0.0 or greater**
+**Requires Node 13.0.0 or greater**
 
 
 ## Usage
 
 In your [Eleventy config file](https://www.11ty.dev/docs/config/) (`.eleventy.js` by default):
 ```js
-const time-to-read = require('eleventy-plugin-time-to-read');
+const timeToRead = require('eleventy-plugin-time-to-read');
 
 module.exports = function(eleventyConfig) {
 	// other config options
-	eleventyConfig.addPlugin(time-to-read);
+	eleventyConfig.addPlugin(timeToRead);
 	// other config options
 }
 ```
@@ -121,7 +121,6 @@ The language to use when outputting reading times, for example:
 - es = Spanish
 - ru = Russian
 - zh-hans = Simplified Chinese
-- de-AT = German as used in Austria
 
 Can also change the number script by using '-u-nu-':
 
