@@ -60,7 +60,12 @@ function validateLabel(label, optionKey) {
 }
 
 function validateInserts(insert, optionKey) {
-	if(typeof insert !== 'string' && insert !== null) {
+	const isString = typeof insert === 'string';
+	const isNumber = typeof insert === 'number';
+	const isUndefined = typeof insert === 'undefined';
+	const isNull = insert === null;
+
+	if(!(isString || isNumber || isUndefined || isNull)) {
 		throw new Error(`Time-to-read's ${optionKey} option must be a string. Received: ${insert}`);
 	}
 }
