@@ -15,21 +15,31 @@ function convertToPlainText(content) {
 
 function parseSpeedOption(speedOption) {
 	const speedOptions = speedOption.split(' ');
+
+	function trimIfPlural(text) {
+		if(text.endsWith('s')) {
+			return text.slice(0, -1);
+		}
+		else {
+			return text;
+		}
+	};
+
 	return {
 		amount: Number(speedOptions[0]),
-		measure: speedOptions[1].toLowerCase(),
-		interval: speedOptions[speedOptions.length - 1].toLowerCase()
+		measure: trimIfPlural(speedOptions[1].toLowerCase()),
+		interval: trimIfPlural(speedOptions[speedOptions.length - 1].toLowerCase())
 	};
 }
 
 function calculateSeconds(text, speed) {
 	const { amount, measure, interval } = parseSpeedOption(speed);
 	let subject;
-	if(measure === 'words') {
+	if(measure === 'word') {
 		// Split words by whitespace and remove any empty values
 		subject = text.split(/\s/).filter(word => word);
 	}
-	else if(measure === 'characters') {
+	else if(measure === 'character') {
 		// Remove all whitespace and normalise non-latin characters
 		subject = text.replace(/\s/g, '').normalize('NFC');
 	}
