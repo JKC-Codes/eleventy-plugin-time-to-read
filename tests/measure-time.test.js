@@ -111,7 +111,33 @@ test('outputs different types', t => {
 	t.is(measureTime(characters(90), {type: 'conjunction', style: 'narrow'}), '1m, 30s');
 });
 
-test.todo('outputs different labels');
+test('outputs auto labels correctly', t => {
+	t.is(measureTime(characters(3599), {hours: 'auto', minutes: 'auto', seconds: 'auto'}), '59 minutes, 59 seconds');
+	t.is(measureTime(characters(3600), {hours: 'auto', minutes: 'auto', seconds: 'auto'}), '1 hour');
+	t.is(measureTime(characters(3601), {hours: 'auto', minutes: 'auto', seconds: 'auto'}), '1 hour, 1 second');
+	t.is(measureTime(characters(3540), {hours: 'auto', minutes: 'auto', seconds: 'auto'}), '59 minutes');
+	t.is(measureTime(characters(3660), {hours: 'auto', minutes: 'auto', seconds: 'auto'}), '1 hour, 1 minute');
+});
+
+test('outputs true/false labels correctly', t => {
+	t.is(measureTime('', {hours: true, minutes: true, seconds: true}), '0 hours, 0 minutes, 0 seconds');
+	t.is(measureTime(characters(3661), {hours: true, minutes: true, seconds: true}), '1 hour, 1 minute, 1 second');
+	t.is(measureTime(characters(3661), {hours: false, minutes: true, seconds: true}), '61 minutes, 1 second');
+	t.is(measureTime(characters(3661), {hours: true, minutes: false, seconds: true}), '1 hour, 61 seconds');
+	t.is(measureTime(characters(3661), {hours: true, minutes: true, seconds: false}), '1 hour, 1 minute');
+	t.is(measureTime(characters(3661), {hours: true, minutes: false, seconds: false}), '1 hour');
+	t.is(measureTime(characters(3661), {hours: false, minutes: true, seconds: false}), '61 minutes');
+	t.is(measureTime(characters(3661), {hours: false, minutes: false, seconds: true}), '3,661 seconds');
+});
+
+test('outputs rounded times correctly', t => {
+	t.is(measureTime(characters(89), {hours: false, minutes: true, seconds: false}), '1 minute');
+	t.is(measureTime(characters(90), {hours: false, minutes: true, seconds: false}), '2 minutes');
+	t.is(measureTime(characters(90), {hours: false, minutes: true, seconds: true}), '1 minute, 30 seconds');
+	t.is(measureTime(characters(5399), {hours: true, minutes: false, seconds: false}), '1 hour');
+	t.is(measureTime(characters(5400), {hours: true, minutes: false, seconds: false}), '2 hours');
+	t.is(measureTime(characters(5400), {hours: true, minutes: false, seconds: true}), '1 hour, 1,800 seconds');
+});
 
 test('outputs with pre/append', t => {
 	t.is(measureTime('a', {prepend: 'foo'}), 'foo1 second');
