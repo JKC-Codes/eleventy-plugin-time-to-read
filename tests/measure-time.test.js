@@ -142,9 +142,11 @@ test('outputs rounded times correctly', t => {
 test('outputs with pre/append', t => {
 	t.is(measureTime('a', {prepend: 'foo'}), 'foo1 second');
 	t.is(measureTime('a', {prepend: 'bar '}), 'bar 1 second');
+	t.is(measureTime('a', {prepend: '2 '}), '2 1 second');
 
 	t.is(measureTime('a', {append: 'foo'}), '1 secondfoo');
 	t.is(measureTime('a', {append: ' bar'}), '1 second bar');
+	t.is(measureTime('a', {append: ' 2'}), '1 second 2');
 });
 
 test('outputs padded digits', t => {
