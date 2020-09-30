@@ -29,29 +29,22 @@ function validateLanguage(language) {
 }
 
 function validateStyle(style) {
-	const isString = typeof style === 'string';
-	const lowerCase = isString && style.toLowerCase();
-	const isValidString = lowerCase === 'narrow' || lowerCase === 'short' || lowerCase === 'long';
-
-	if(!(isString && isValidString)) {
+	if(!(typeof style === 'string' && /^(narrow|short|long)$/i.test(style))) {
 		throw new Error(`Time-to-read's style option must be a string matching 'narrow', 'short' or 'long'. Received: ${style}`);
 	}
 }
 
 function validateType(type) {
-	const isString = typeof type === 'string';
-	const lowerCase = isString && type.toLowerCase();
-	const isValidString = lowerCase === 'unit' || lowerCase === 'conjunction';
-
-	if(!(isString && isValidString)) {
+	if(!(typeof type === 'string' && /^(unit|conjunction)$/i.test(type))) {
 		throw new Error(`Time-to-read's type option must be a string matching 'unit' or 'conjunction'. Received: ${type}`);
 	}
 }
 
 function validateLabel(label, optionKey) {
 	const isBoolean = typeof label === 'boolean';
-	const isAuto = typeof label === 'string' && label.toLowerCase() === 'auto';
-	const isOnlySeconds = typeof label === 'string' && label.toLowerCase() === 'only' && optionKey === 'seconds';
+	const isString = typeof label === 'string';
+	const isAuto = isString && label.toLowerCase() === 'auto';
+	const isOnlySeconds = optionKey === 'seconds' && isString && label.toLowerCase() === 'only';
 
 	if(!(isBoolean || isAuto || isOnlySeconds)) {
 		const secondsOnly = optionKey === 'seconds' ? " 'only', ":" ";
@@ -62,10 +55,9 @@ function validateLabel(label, optionKey) {
 function validateInserts(insert, optionKey) {
 	const isString = typeof insert === 'string';
 	const isNumber = typeof insert === 'number';
-	const isUndefined = typeof insert === 'undefined';
 	const isNull = insert === null;
 
-	if(!(isString || isNumber || isUndefined || isNull)) {
+	if(!(isString || isNumber || isNull)) {
 		throw new Error(`Time-to-read's ${optionKey} option must be a string. Received: ${insert}`);
 	}
 }
