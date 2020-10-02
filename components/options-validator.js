@@ -1,5 +1,51 @@
 const regEx = require('./regular-expressions.js');
 
+module.exports = function(options) {
+	for(option in options) {
+		// Prevent undefined overwriting defaults
+		if(options[option] === undefined) {
+			delete options[option];
+			continue;
+		}
+
+		switch(option) {
+			case 'speed':
+				validateSpeed(options[option]);
+			break;
+
+			case 'language':
+				validateLanguage(options[option]);
+			break;
+
+			case 'style':
+				validateStyle(options[option]);
+			break;
+
+			case 'type':
+				validateType(options[option]);
+			break;
+
+			case 'hours':
+			case 'minutes':
+			case 'seconds':
+				validateLabel(options[option], option);
+			break;
+
+			case 'prepend':
+			case 'append':
+				validateInserts(options[option], option);
+			break;
+
+			case 'digits':
+				validateDigits(options[option]);
+			break;
+
+			default: throw new Error(`Time-to-read encountered an unrecognised option: ${option}`);
+		}
+	}
+	return options;
+}
+
 function validateSpeed(speed) {
 	if(typeof speed !== 'string' || !new RegExp(regEx.speed,'i').test(speed)) {
 		throw new Error(`Time-to-read's speed option must be a space separated string matching: [Number greater than 0] ['words' or 'characters'] ['hour', 'minute' or 'second']. Received: ${speed}`);
@@ -70,50 +116,4 @@ function validateDigits(digits) {
 	if(!isInteger || !isWithinRange) {
 		throw new Error(`Time-to-read's digits option must be an integer from 1 to 21. Received: ${digits}`);
 	}
-}
-
-module.exports = function(options) {
-	for(option in options) {
-		// Prevent undefined overwriting defaults
-		if(options[option] === undefined) {
-			delete options[option];
-			continue;
-		}
-
-		switch(option) {
-			case 'speed':
-				validateSpeed(options[option]);
-			break;
-
-			case 'language':
-				validateLanguage(options[option]);
-			break;
-
-			case 'style':
-				validateStyle(options[option]);
-			break;
-
-			case 'type':
-				validateType(options[option]);
-			break;
-
-			case 'hours':
-			case 'minutes':
-			case 'seconds':
-				validateLabel(options[option], option);
-			break;
-
-			case 'prepend':
-			case 'append':
-				validateInserts(options[option], option);
-			break;
-
-			case 'digits':
-				validateDigits(options[option]);
-			break;
-
-			default: throw new Error(`Time-to-read encountered an unrecognised option: ${option}`);
-		}
-	}
-	return options;
 }
