@@ -46,6 +46,7 @@ module.exports = function(options) {
 	return options;
 }
 
+
 function validateSpeed(speed) {
 	if(typeof speed !== 'string' || !new RegExp(regEx.speed,'i').test(speed)) {
 		throw new Error(`Time-to-read's speed option must be a space separated string matching: [Number greater than 0] ['words' or 'characters'] ['hour', 'minute' or 'second']. Received: ${speed}`);
@@ -75,13 +76,13 @@ function validateLanguage(language) {
 }
 
 function validateStyle(style) {
-	if(!(typeof style === 'string' && /^(narrow|short|long)$/i.test(style))) {
+	if(typeof style !== 'string' || !/^(narrow|short|long)$/i.test(style)) {
 		throw new Error(`Time-to-read's style option must be a string matching 'narrow', 'short' or 'long'. Received: ${style}`);
 	}
 }
 
 function validateType(type) {
-	if(!(typeof type === 'string' && /^(unit|conjunction)$/i.test(type))) {
+	if(typeof type !== 'string' || !/^(unit|conjunction)$/i.test(type)) {
 		throw new Error(`Time-to-read's type option must be a string matching 'unit' or 'conjunction'. Received: ${type}`);
 	}
 }
@@ -89,21 +90,21 @@ function validateType(type) {
 function validateLabel(label, optionKey) {
 	const isBoolean = typeof label === 'boolean';
 	const isString = typeof label === 'string';
-	const isAuto = isString && label.toLowerCase() === 'auto';
-	const isOnlySeconds = optionKey === 'seconds' && isString && label.toLowerCase() === 'only';
+	const isAuto = /^auto$/i.test(label);
+	const isOnlySeconds = optionKey === 'seconds' && /^only$/i.test(label);
 
-	if(!(isBoolean || isAuto || isOnlySeconds)) {
-		const secondsOnly = optionKey === 'seconds' ? " 'only', ":" ";
+	if(!isBoolean && !(isString && (isAuto || isOnlySeconds))) {
+		const secondsOnly = isOnlySeconds ? " 'only', ":" ";
 		throw new Error(`Time-to-read's ${optionKey} option must be true, false${secondsOnly}or 'auto'. Received '${label}'`);
 	}
 }
 
 function validateInserts(insert, optionKey) {
+	const isNull = insert === null;
 	const isString = typeof insert === 'string';
 	const isNumber = typeof insert === 'number';
-	const isNull = insert === null;
 
-	if(!(isString || isNumber || isNull)) {
+	if(!isNull && !isString && !isNumber) {
 		throw new Error(`Time-to-read's ${optionKey} option must be a string. Received: ${insert}`);
 	}
 }
