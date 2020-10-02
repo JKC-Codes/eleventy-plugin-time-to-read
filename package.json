@@ -29,19 +29,18 @@
 		"url": "https://jkc.codes/"
 	},
 	"files": [
-		".eleventy.js",
+		"index.js",
 		"components/**"
 	],
-	"main": ".eleventy.js",
+	"main": "index.js",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/JKC-Codes/eleventy-plugin-time-to-read.git"
 	},
 	"scripts": {
-		"eleventy": "npx @11ty/eleventy --config=eleventyTestSiteConfig.js",
-		"eleventy:test": "npm run eleventy -- --dryrun --quiet",
+		"eleventy": "npx @11ty/eleventy --dryrun --quiet",
 		"ava": "ava",
-		"test": "npm-run-all --parallel ava eleventy:test",
+		"test": "npm-run-all --parallel ava eleventy",
 		"prepublishOnly": "npm run test"
 	},
 	"devDependencies": {
