@@ -1,6 +1,6 @@
 # Time To Read
 
-An [11ty](https://www.11ty.dev/) plugin that approximates how long it would take a user to read a given text and outputs the result in your choice of language.
+An [11ty](https://www.11ty.dev/) plugin that approximates how long it would take a user to read a given text and outputs the result in your choice of language and format.
 
 ```
 1 minute
@@ -11,6 +11,7 @@ An [11ty](https://www.11ty.dev/) plugin that approximates how long it would take
 3 मिनट
 3 минуты
 三分钟
+३ मिनट
 ```
 
 - [Installation](#installation)
@@ -31,11 +32,10 @@ An [11ty](https://www.11ty.dev/) plugin that approximates how long it would take
 
 ## Installation
 
+**Requires Node 13.0.0 or greater**
 ```shell
 npm install eleventy-plugin-time-to-read
 ```
-
-**Requires Node 13.0.0 or greater**
 
 
 ## Usage
@@ -55,30 +55,28 @@ Then, depending on your template engine (11ty uses Liquid by default) insert the
 
 Liquid or Nunjucks:
 ```liquid
-It will take {{ text | timeToRead }} to read this
+It will take {{ 'text' | timeToRead }} to read this
 ```
 
 Handlebars:
 ```handlebars
-It will take {{ timeToRead text }} to read this
+It will take {{ timeToRead 'text' }} to read this
 ```
 
 Javascript:
 ```js
 module.exports = function({text}) {
-	return `It will take ${this.timeToRead(text)} to read this`;
+	return `It will take ${this.timeToRead('text')} to read this`;
 };
 ```
 
 Output:
 ```html
-It will take 6 minutes to read this
+It will take 1 minute to read this
 ```
 
 
 ## Configuration
-
-Time To Read accepts a number of configuration options as an object.
 
 ```js
 const timeToRead = require('eleventy-plugin-time-to-read');
@@ -102,87 +100,110 @@ module.exports = function(eleventyConfig) {
 ### Speed
 
 - Default: '1000 characters per minute'
-- Accepts: String formatted as: [Number] ['characters' or 'words'] [optional 'per', 'a' or 'an'] ['hour', 'minute' or 'second']
+- Accepts: String formatted as: [Number] ['characters' or 'words'] [optional preposition] ['hour', 'minute' or 'second']
 
 The speed to calculate the time to read with. E.g. '250 words a minute', '5 words per second'.
 
 Can also be entered when using a filter:
-```liquid
-{{ post.templateContent | timeToRead: '220 words a minute' }}
+```
+{{ content | timeToRead: '220 words a minute' }} // Liquid
+
+{{ content | timeToRead ('220 words a minute') }} // Nunjucks
+
+{{ timeToRead content '220 words a minute' }} // Handlebars
+
+${this.timeToRead(content, '220 words a minute')} // JavaScript
 ```
 
 ### Language
-- Default: 'en'
-- Accepts: A string with a [Unicode BCP 47 language identifier](https://www.unicode.org/reports/tr35/tr35.html#BCP_47_Conformance). E.g. 'en', 'es', 'fr', 'ru', 'hi', 'zh'.
 
-The language to use when outputting reading times, for example:
+- Default: 'en'
+- Accepts: String representing a language supported by the [Internationalisation API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+
+The language to use when outputting reading times. For example:
 
 - fr = French
 - es = Spanish
 - ru = Russian
 - zh-hans = Simplified Chinese
 
-Can also change the number script by using '-u-nu-':
+Number scripts can be changed using '-u-nu-', for example:
 
 - en = 3 minutes
 - zh = 3分钟
 - zh-u-nu-hanidec = 三分钟
 - en-u-nu-hanidec = 三 minutes
-
-Accepts any language supported by your Node version's [Internationalisation API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+- hi-u-nu-deva = ३ मिनट
 
 Can also be entered when using a filter:
-```liquid
-{{ post.templateContent | timeToRead: 'fr' }}
 ```
+{{ content | timeToRead: 'pl' }} // Liquid
+
+{{ content | timeToRead ('pl') }} // Nunjucks
+
+{{ timeToRead content 'pl' }} // Handlebars
+
+${this.timeToRead(content, 'pl')} // JavaScript
+```
+
 
 ### Style
 
 - Default: 'long'
-- Accepts: 'narow', 'short' or 'long'
+- Accepts: 'narrow', 'short' or 'long'
 
-The style of the speed unit text and conjunction. E.g. 'm', 'min' or 'minute'; 's', 'sec' or 'second'; '&' or 'and'.
+The style of the speed unit text and conjunction, for example:
 
-The exact output depends on the language and type options. Some options may output the same value.
+- long = 3 minutes and 10 seconds
+- short = 3 min & 10 sec
+- narrow = 3m 10s
+
+The exact output depends on the *language* and *type* options.
+
 
 ### Type
 
 - Default: 'unit'
 - Accepts: 'unit' or 'conjunction'
 
-Whether to style as a list of units or a generic list. E.g. '1 minute, 10 seconds', '1 minute and 10 seconds', '1 min, 10 secs', '1 min & 10 secs'
+Whether to style as a list of units or a generic list, for example:
 
-The exact output depends on the language and style options. Some options may output the same value.
+- unit = 3 minutes, 10 seconds
+- conjunction = 3 minutes and 10 seconds
+
+The exact output depends on the *language* and *style* options.
 
 ### Hours
 
 - Default: 'auto'
-- Accepts: True, False or 'auto'
+- Accepts: Boolean or 'auto'
 
-Whether to show (True) or hide (False) hours. Auto will only display hours when they are greater than zero.
+Whether to show (*true*) or hide (*false*) hours. 'auto' will only display hours when they are greater than zero.
 
 ### Minutes
 
-- Default: 'True'
-- Accepts: True, False or 'auto'
+- Default: 'true'
+- Accepts: Boolean or 'auto'
 
-Whether to show (True) or hide (False) minutes. Auto will only display minutes when they are greater than zero.
+Whether to show (*true*) or hide (*false*) minutes. 'auto' will only display minutes when they are greater than zero.
 
 ### Seconds
 
-- Default: 'False'
-- Accepts: True, False, 'auto' or 'only'
+- Default: 'false'
+- Accepts: Boolean, 'auto' or 'only'
 
-Whether to show (True) or hide (False) seconds. Auto will only display seconds when they are greater than zero.
-
-Only will display the seconds without a label and hide all other text including other time units, the 'seconds' label and any pre/appends. E.g. 10, 37, 454
+Whether to show (*true*) or hide (*false*) seconds. 'auto' will only display seconds when they are greater than zero. 'only' displays seconds without any text, overriding *hours*, *minutes* and *pre/append* options.
 
 ### Prepend
 
 - Default: null
 - Accepts: String or Null
 
-Adds a string to the beginning of Time To Read's output. E.g. 'About 3 minutes', '~3 minutes'
+Adds a string to the beginning of Time To Read's output, for example:
+
+- 'About ' = About 3 minutes
+- '~' = ~3 minutes
+- 'Approx ' = Approx 3 minutes, 10 seconds
 
 Does not add spaces automatically. Will not be translated.
 
@@ -191,7 +212,11 @@ Does not add spaces automatically. Will not be translated.
 - Default: null
 - Accepts: String or Null
 
-Adds a string to the end of Time To Read's output. E.g. '3 minutes to read', '3 minutes-ish'
+Adds a string to the end of Time To Read's output, for example:
+
+- ' to read' = 3 minutes to read
+- '-ish' = 3 minutes-ish
+- ' (roughly)' = 3 minutes, 10 seconds (roughly)
 
 Does not add spaces automatically. Will not be translated.
 
@@ -200,7 +225,10 @@ Does not add spaces automatically. Will not be translated.
 - Default: 1
 - Accepts: Number between 1 and 21 inclusive
 
-The minimum number of digits to display. Will pad with 0 if not met. E.g. '01 minute', '07 minutes'
+The minimum number of digits to display. Will pad with 0 if not met, for example:
+
+- 2 = 01 minute
+- 3 = 001 minutes
 
 
 ## Examples
