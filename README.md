@@ -5,13 +5,14 @@ An [11ty](https://www.11ty.dev/) plugin that approximates how long it would take
 ```
 1 minute
 3 minutes
-1 min
-3m
-3 minutos
-3 मिनट
-3 минуты
-三分钟
-३ मिनट
+3 minutes, 10 seconds
+3 minutes and 10 seconds
+3 min & 10 sec
+3m, 10s
+3m 10s
+3 minuty i 10 sekund
+३ मिनट और १० सेकंड
+三分钟和一〇秒钟
 ```
 
 - [Installation](#installation)
