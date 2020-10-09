@@ -108,30 +108,24 @@ function getTimes(totalSeconds, showHours, showMinutes, showSeconds, ) {
 		minutes = Math.floor((totalSeconds % 3600) / 60);
 		seconds = totalSeconds % 60;
 	}
-
-	if(showHours && !showMinutes && !showSeconds) {
+	else if(showHours && !showMinutes && !showSeconds) {
 		hours = Math.max(1, Math.round(totalSeconds / 3600));
 	}
-
-	if(!showHours && showMinutes && !showSeconds) {
+	else if(!showHours && showMinutes && !showSeconds) {
 		minutes = Math.max(1, Math.round(totalSeconds / 60));
 	}
-
-	if(!showHours && !showMinutes && showSeconds) {
+	else if(!showHours && !showMinutes && showSeconds) {
 		seconds = Math.max(1, totalSeconds);
 	}
-
-	if(!showHours && showMinutes && showSeconds) {
+	else if(!showHours && showMinutes && showSeconds) {
 		minutes = Math.floor(totalSeconds / 60);
 		seconds = totalSeconds % 60;
 	}
-
-	if(showHours && !showMinutes && showSeconds) {
+	else if(showHours && !showMinutes && showSeconds) {
 		hours = Math.floor(totalSeconds / 3600);
 		seconds = totalSeconds % 3600;
 	}
-
-	if(showHours && showMinutes && !showSeconds) {
+	else if(showHours && showMinutes && !showSeconds) {
 		hours = Math.floor(totalSeconds / 3600);
 		minutes = Math.round((totalSeconds % 3600) / 60);
 	}
