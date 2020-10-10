@@ -103,31 +103,34 @@ function getTimeToRead(totalSeconds, options) {
 function getTimes(totalSeconds, showHours, showMinutes, showSeconds, ) {
 	let hours, minutes, seconds;
 
-	if(showHours && showMinutes && showSeconds) {
+	if(showHours && showMinutes && !showSeconds) {
+		hours = Math.floor(totalSeconds / 3600);
+		minutes = Math.round((totalSeconds % 3600) / 60);
+		if(hours === 0 && minutes === 0) {
+			minutes = 1;
+		}
+	}
+	else if(showHours && showMinutes && showSeconds) {
 		hours = Math.floor(totalSeconds / 3600);
 		minutes = Math.floor((totalSeconds % 3600) / 60);
 		seconds = totalSeconds % 60;
 	}
-	else if(showHours && !showMinutes && !showSeconds) {
-		hours = Math.max(1, Math.round(totalSeconds / 3600));
-	}
 	else if(!showHours && showMinutes && !showSeconds) {
 		minutes = Math.max(1, Math.round(totalSeconds / 60));
-	}
-	else if(!showHours && !showMinutes && showSeconds) {
-		seconds = Math.max(1, totalSeconds);
 	}
 	else if(!showHours && showMinutes && showSeconds) {
 		minutes = Math.floor(totalSeconds / 60);
 		seconds = totalSeconds % 60;
 	}
+	else if(!showHours && !showMinutes && showSeconds) {
+		seconds = Math.max(1, totalSeconds);
+	}
 	else if(showHours && !showMinutes && showSeconds) {
 		hours = Math.floor(totalSeconds / 3600);
 		seconds = totalSeconds % 3600;
 	}
-	else if(showHours && showMinutes && !showSeconds) {
-		hours = Math.floor(totalSeconds / 3600);
-		minutes = Math.round((totalSeconds % 3600) / 60);
+	else if(showHours && !showMinutes && !showSeconds) {
+		hours = Math.max(1, Math.round(totalSeconds / 3600));
 	}
 
 	if(!showHours || (/^auto$/i.test(showHours) && hours === 0)) {
