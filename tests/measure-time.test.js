@@ -131,6 +131,8 @@ test('outputs true/false labels correctly', t => {
 });
 
 test('outputs rounded times correctly', t => {
+	t.is(measureTime(characters(1), {hours: 'auto', minutes: true, seconds: false}), '1 minute');
+	t.is(measureTime(characters(59), {hours: 'auto', minutes: true, seconds: false}), '1 minute');
 	t.is(measureTime(characters(89), {hours: false, minutes: true, seconds: false}), '1 minute');
 	t.is(measureTime(characters(90), {hours: false, minutes: true, seconds: false}), '2 minutes');
 	t.is(measureTime(characters(90), {hours: false, minutes: true, seconds: true}), '1 minute, 30 seconds');
