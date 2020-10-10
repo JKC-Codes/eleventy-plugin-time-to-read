@@ -1,13 +1,13 @@
-// Regex = 1 or more numbers
+// Regex = 1 or more numbers + optional '.' followed by 1 or more numbers
 const speedUnitAmount = String.raw`[0-9]+(\.[0-9]+)?`;
 
-// Regex = 'characters' or 'words'
+// Regex = 'character(s)' or 'word(s)'
 const speedUnitMeasure = String.raw`(character|word)s?`;
 
-// Regex = 'hour' or 'minute' or 'second'
+// Regex = 'hour(s)' or 'minute(s)' or 'second(s)'
 const speedUnitInterval = String.raw`(hour|minute|second)s?`;
 
-// Regex = speedUnitAmount + ' ' + speedUnitMeasure + ' ' + optional anything + speedUnitInterval
+// Regex = speedUnitAmount + ' ' + speedUnitMeasure + ' ' + optional anything followed by space + speedUnitInterval
 const speed = String.raw`^${speedUnitAmount} ${speedUnitMeasure} (.* )*${speedUnitInterval}$`;
 
 // Regex = '<' + optional '/' + 1 or more alphanumeric characters + a non-word character + 0 or more non-'>' characters + '>'
