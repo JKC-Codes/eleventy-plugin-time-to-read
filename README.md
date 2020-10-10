@@ -46,33 +46,23 @@ In your [Eleventy config file](https://www.11ty.dev/docs/config/) (`.eleventy.js
 const timeToRead = require('eleventy-plugin-time-to-read');
 
 module.exports = function(eleventyConfig) {
-	// other config options
 	eleventyConfig.addPlugin(timeToRead);
-	// other config options
 }
 ```
 
 Then, depending on your template engine (11ty uses Liquid by default) insert the filter into your template:
 
-Liquid or Nunjucks:
-```liquid
+```
+// Liquid (.liquid) or Nunjucks (.njk):
 It will take {{ 'text' | timeToRead }} to read this
-```
 
-Handlebars:
-```handlebars
+// Handlebars (.hbs):
 It will take {{ timeToRead 'text' }} to read this
-```
 
-Javascript:
-```js
-module.exports = function({text}) {
-	return `It will take ${this.timeToRead('text')} to read this`;
-};
-```
+// Javascript (.11ty.js):
+It will take ${this.timeToRead('text')} to read this
 
-Output:
-```html
+// Output:
 It will take 1 minute to read this
 ```
 
@@ -113,7 +103,7 @@ Can also be entered when using a filter:
 
 {{ timeToRead content '220 words a minute' }} // Handlebars
 
-${this.timeToRead(content, '220 words a minute')} // JavaScript
+${this.timeToRead(data.content, '220 words a minute')} // JavaScript
 ```
 
 ### Language
@@ -144,7 +134,7 @@ Can also be entered when using a filter:
 
 {{ timeToRead content 'pl' }} // Handlebars
 
-${this.timeToRead(content, 'pl')} // JavaScript
+${this.timeToRead(data.content, 'pl')} // JavaScript
 ```
 
 
@@ -157,7 +147,7 @@ The style of the speed unit text and conjunction, for example:
 
 - long = 3 minutes and 10 seconds
 - short = 3 min & 10 sec
-- narrow = 3m 10s
+- narrow = 3m, 10s
 
 The exact output depends on the *language* and *type* options.
 
