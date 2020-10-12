@@ -50,7 +50,7 @@ module.exports = function(eleventyConfig) {
 }
 ```
 
-Then, depending on your template engine (11ty uses Liquid by default) insert the filter into your template:
+Then, depending on your template engine (Liquid by default) insert the filter into your template:
 
 ```
 // Liquid (.liquid) or Nunjucks (.njk):
@@ -91,7 +91,7 @@ module.exports = function(eleventyConfig) {
 ### Speed
 
 - Default: '1000 characters per minute'
-- Accepts: String formatted as: [Number] ['characters' or 'words'] [optional preposition] ['hour', 'minute' or 'second']
+- Accepts: String formatted as: Number characters/words [optional preposition] hour/minute/second
 
 The speed to calculate the time to read with. E.g. '250 words a minute', '5 words per second'.
 
@@ -137,13 +137,12 @@ Can also be entered when using a filter:
 ${this.timeToRead(data.content, 'pl')} // JavaScript
 ```
 
-
 ### Style
 
 - Default: 'long'
 - Accepts: 'narrow', 'short' or 'long'
 
-The style of the speed unit text and conjunction, for example:
+The style of the text and conjunction, for example:
 
 - long = 3 minutes and 10 seconds
 - short = 3 min & 10 sec
@@ -151,13 +150,12 @@ The style of the speed unit text and conjunction, for example:
 
 The exact output depends on the *language* and *type* options.
 
-
 ### Type
 
 - Default: 'unit'
 - Accepts: 'unit' or 'conjunction'
 
-Whether to style as a list of units or a generic list, for example:
+The type of connection between list items, for example:
 
 - unit = 3 minutes, 10 seconds
 - conjunction = 3 minutes and 10 seconds
