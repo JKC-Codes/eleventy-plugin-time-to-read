@@ -56,7 +56,7 @@
 	},
 	"ava": {
 		"files": [
-			"!**/test-site/**"
+			"!./tests/test-site/**"
 		]
 	}
 }
