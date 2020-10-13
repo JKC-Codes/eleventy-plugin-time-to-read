@@ -28,7 +28,8 @@ An [11ty](https://www.11ty.dev/) plugin that approximates how long it would take
 	- [Prepend](#prepend)
 	- [Append](#append)
 	- [Digits](#digits)
-- [Examples](#examples)
+- [Example](#example)
+- [Licence](#licence)
 
 
 ## Installation
@@ -91,7 +92,7 @@ module.exports = function(eleventyConfig) {
 ### Speed
 
 - Default: '1000 characters per minute'
-- Accepts: String formatted as: Number characters/words [optional preposition] hour/minute/second
+- Accepts: String formatted as: Number 'characters'/'words' [optional preposition] 'hour'/'minute'/'second'
 
 The speed to calculate the time to read with. E.g. '250 words a minute', '5 words per second'.
 
@@ -181,7 +182,7 @@ Whether to show (*true*) or hide (*false*) minutes. 'auto' will only display min
 - Default: 'false'
 - Accepts: Boolean, 'auto' or 'only'
 
-Whether to show (*true*) or hide (*false*) seconds. 'auto' will only display seconds when they are greater than zero. 'only' displays seconds without any text, overriding *hours*, *minutes* and *pre/append* options.
+Whether to show (*true*) or hide (*false*) seconds. 'auto' will only display seconds when they are greater than zero. 'only' displays seconds without any text; overriding *hours*, *minutes* and *pre/append* options.
 
 ### Prepend
 
@@ -216,69 +217,76 @@ Does not add spaces automatically. Will not be translated.
 
 The minimum number of digits to display. Will pad with 0 if not met, for example:
 
+- 1 = 1 minute
 - 2 = 01 minute
-- 3 = 001 minutes
+- 3 = 001 minute
 
 
-## Examples
+## Example
 
-### Blog posts listing
+How to create a blog page listing all posts with their reading times as well as include the reading time within those posts.
+
+#### File structure:
+
 ```
----
-layout: base
----
+_includes
+└─ post.liquid
+blog
+├─ blog.html
+├─ post1.md
+└─ post2.md
+.eleventy.js
+```
 
-<h1>Blog Posts</h1>
+#### _includes/post.liquid
+
+``` liquid
+<header>
+	<h1>{{ title }}</h1>
+	<p>About {{ content | timeToRead }} to read</p>
+</header>
+
+<main>
+{{ content }}
+</main>
+```
+
+#### blog/blog.html
+
+``` html
+<h1>Blog</h1>
 
 <ul>
-	{%- for post in collections.posts %}
+	{%- for post in collections.blogPost %}
 		<li>
 			<h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
-			<p>About {{ post.templateContent | timeToRead }} to read</p>
+			<p>{{ post.templateContent | timeToRead }}</p>
 		</li>
 	{%- endfor %}
 </ul>
 ```
 
-Output:
-```html
-<h1>Blog Posts</h1>
+#### blog/post1.md
 
-<ul>
-	<li>
-		<h2><a href="example.com/blog/post1">Post 1</a></h2>
-		<p>About 6 minutes to read</p>
-	</li>
-	<li>
-		<h2><a href="example.com/blog/post2">Post 2</a></h2>
-		<p>About 1 minute to read</p>
-	</li>
-</ul>
-```
-
-### Individual Articles Template
-```
+``` md
 ---
-layout: base
+layout: post.liquid
+title: Post 1
+tags: blogPost
 ---
-
-<header>
-	<h1>{{ title }}</h1>
-	<p>{{ content | timeToRead }}</p>
-</header>
-
-{{ content }}
-```
-
-Output:
-```
-<header>
-	<h1>An Article</h1>
-	<p>9 minutes</p>
-</header>
-
 Lorem ipsum dolor sit…
 ```
 
-## License
+#### .eleventy.js
+
+``` js
+const timeToRead = require('eleventy-plugin-time-to-read');
+
+module.exports = function(eleventyConfig) {
+    eleventyConfig.addPlugin(timeToRead);
+}
+```
+
+
+## Licence
 [GNU GPLv3 ](https://choosealicense.com/licenses/gpl-3.0/)
