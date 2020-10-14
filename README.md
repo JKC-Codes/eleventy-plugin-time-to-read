@@ -92,7 +92,7 @@ module.exports = function(eleventyConfig) {
 ### Speed
 
 - Default: '1000 characters per minute'
-- Accepts: String formatted as: Number 'characters'/'words' [optional preposition] 'hour'/'minute'/'second'
+- Accepts: A String formatted as: Number characters/words [optional preposition] hour/minute/second
 
 The speed to calculate the time to read with. E.g. '250 words a minute', '5 words per second'.
 
@@ -110,7 +110,7 @@ ${this.timeToRead(data.content, '220 words a minute')} // JavaScript
 ### Language
 
 - Default: 'en'
-- Accepts: String representing a language supported by the [Internationalisation API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+- Accepts: A String representing a language supported by the [Internationalisation API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
 
 The language to use when outputting reading times. For example:
 
@@ -129,13 +129,13 @@ Number scripts can be changed using '-u-nu-', for example:
 
 Can also be entered when using a filter:
 ```
-{{ content | timeToRead: 'pl' }} // Liquid
+{{ content | timeToRead: 'zh-hans' }} // Liquid
 
-{{ content | timeToRead ('pl') }} // Nunjucks
+{{ content | timeToRead ('zh-hans') }} // Nunjucks
 
-{{ timeToRead content 'pl' }} // Handlebars
+{{ timeToRead content 'zh-hans' }} // Handlebars
 
-${this.timeToRead(data.content, 'pl')} // JavaScript
+${this.timeToRead(data.content, 'zh-hans')} // JavaScript
 ```
 
 ### Style
@@ -191,9 +191,8 @@ Whether to show (*true*) or hide (*false*) seconds. 'auto' will only display sec
 
 Adds a string to the beginning of Time To Read's output, for example:
 
-- 'About ' = About 3 minutes
-- '~' = ~3 minutes
-- 'Approx ' = Approx 3 minutes, 10 seconds
+- 'About ' = About 3 minutes, 10 seconds
+- '~' = ~3 minutes, 10 seconds
 
 Does not add spaces automatically. Will not be translated.
 
@@ -204,22 +203,21 @@ Does not add spaces automatically. Will not be translated.
 
 Adds a string to the end of Time To Read's output, for example:
 
-- ' to read' = 3 minutes to read
-- '-ish' = 3 minutes-ish
-- ' (roughly)' = 3 minutes, 10 seconds (roughly)
+- ' to read' = 3 minutes, 10 seconds to read
+- '-ish' = 3 minutes, 10 seconds-ish
 
 Does not add spaces automatically. Will not be translated.
 
 ### Digits
 
 - Default: 1
-- Accepts: Number between 1 and 21 inclusive
+- Accepts: An integer between 1 and 21 inclusive
 
 The minimum number of digits to display. Will pad with 0 if not met, for example:
 
-- 1 = 1 minute
-- 2 = 01 minute
-- 3 = 001 minute
+- 1 = 3 minutes, 10 seconds
+- 2 = 03 minutes, 10 seconds
+- 3 = 003 minutes, 010 seconds
 
 
 ## Example
@@ -233,8 +231,7 @@ _includes
 └─ post.liquid
 blog
 ├─ blog.html
-├─ post1.md
-└─ post2.md
+└─ post.md
 .eleventy.js
 ```
 
@@ -266,12 +263,12 @@ blog
 </ul>
 ```
 
-#### blog/post1.md
+#### blog/post.md
 
 ``` md
 ---
 layout: post.liquid
-title: Post 1
+title: Lorem Ipsum
 tags: blogPost
 ---
 Lorem ipsum dolor sit…
