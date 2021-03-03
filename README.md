@@ -18,16 +18,16 @@ An [11ty](https://www.11ty.dev/) plugin that approximates how long it would take
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
-	- [Speed](#speed)
-	- [Language](#language)
-	- [Style](#style)
-	- [Type](#type)
-	- [Hours](#hours)
-	- [Minutes](#minutes)
-	- [Seconds](#seconds)
-	- [Prepend](#prepend)
-	- [Append](#append)
-	- [Digits](#digits)
+  - [Speed](#speed)
+  - [Language](#language)
+  - [Style](#style)
+  - [Type](#type)
+  - [Hours](#hours)
+  - [Minutes](#minutes)
+  - [Seconds](#seconds)
+  - [Prepend](#prepend)
+  - [Append](#append)
+  - [Digits](#digits)
 - [Example](#example)
 - [Licence](#licence)
 
@@ -47,7 +47,7 @@ In your [Eleventy config file](https://www.11ty.dev/docs/config/) (`.eleventy.js
 const timeToRead = require('eleventy-plugin-time-to-read');
 
 module.exports = function(eleventyConfig) {
-	eleventyConfig.addPlugin(timeToRead);
+  eleventyConfig.addPlugin(timeToRead);
 }
 ```
 
@@ -74,18 +74,18 @@ It will take 1 minute to read this
 const timeToRead = require('eleventy-plugin-time-to-read');
 
 module.exports = function(eleventyConfig) {
-	eleventyConfig.addPlugin(timeToRead, {
-		speed: '1000 characters per minute',
-		language: 'en',
-		style: 'long',
-		type: 'unit',
-		hours: 'auto',
-		minutes: true,
-		seconds: false,
-		prepend: null,
-		append: null,
-		digits: 1,
-	});
+  eleventyConfig.addPlugin(timeToRead, {
+    speed: '1000 characters per minute',
+    language: 'en',
+    style: 'long',
+    type: 'unit',
+    hours: 'auto',
+    minutes: true,
+    seconds: false,
+    prepend: null,
+    append: null,
+    digits: 1,
+  });
 }
 ```
 
@@ -239,8 +239,8 @@ blog
 
 ``` liquid
 <header>
-	<h1>{{ title }}</h1>
-	<p>About {{ content | timeToRead }} to read</p>
+  <h1>{{ title }}</h1>
+  <p>About {{ content | timeToRead }} to read</p>
 </header>
 
 <main>
@@ -254,12 +254,12 @@ blog
 <h1>Blog</h1>
 
 <ul>
-	{%- for post in collections.blogPost %}
-		<li>
-			<h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
-			<p>{{ post.templateContent | timeToRead }}</p>
-		</li>
-	{%- endfor %}
+  {%- for post in collections.blogPost %}
+    <li>
+      <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
+      <p>{{ post.templateContent | timeToRead }}</p>
+    </li>
+  {%- endfor %}
 </ul>
 ```
 
