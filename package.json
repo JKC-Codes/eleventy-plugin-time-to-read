@@ -23,7 +23,7 @@
 	"bugs": {
 		"url": "https://github.com/JKC-Codes/eleventy-plugin-time-to-read/issues"
 	},
-	"license": "GPL-3.0-or-later",
+	"license": "MPL-2.0",
 	"author": {
 		"name": "John Kemp-Cruz",
 		"url": "https://jkc.codes/"
