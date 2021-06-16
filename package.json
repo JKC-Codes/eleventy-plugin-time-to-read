@@ -1,6 +1,6 @@
 {
 	"name": "eleventy-plugin-time-to-read",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "11ty plugin for estimating the time to read a given text. Supports multiple languages",
 	"keywords": [
 		"11ty",
