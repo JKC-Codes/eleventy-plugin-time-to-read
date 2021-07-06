@@ -26,11 +26,11 @@ function getTotalSeconds(content, speed) {
 
 	if(measure === 'word') {
 		// Split words by whitespace and remove any empty values
-		count = text.split(/\s/).filter(word => word).length;
+		count = text.split(/\s+/).filter(word => word).length;
 	}
 	else if(measure === 'character') {
 		// Remove all whitespace and normalise non-latin characters
-		count = text.replace(/\s/g, '').normalize('NFC').length;
+		count = text.replace(/\s+/g, '').normalize('NFC').length;
 	}
 
 	// Normalise to seconds
