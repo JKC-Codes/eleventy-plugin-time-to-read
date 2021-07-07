@@ -13,6 +13,7 @@ An [11ty](https://www.11ty.dev/) plugin that approximates how long it would take
 3 minuty i 10 sekund
 ३ मिनट और १० सेकंड
 三分钟和一〇秒钟
+🕒🕒🕒 3 minutes to read
 ```
 
 - [Installation](#installation)
@@ -25,16 +26,14 @@ An [11ty](https://www.11ty.dev/) plugin that approximates how long it would take
   - [Hours](#hours)
   - [Minutes](#minutes)
   - [Seconds](#seconds)
-  - [Prepend](#prepend)
-  - [Append](#append)
   - [Digits](#digits)
+  - [Output](#output)
 - [Example](#example)
 - [Licence](#licence)
 
 
 ## Installation
 
-**Requires Node 13.0.0 or greater**
 ```shell
 npm install eleventy-plugin-time-to-read
 ```
@@ -82,9 +81,10 @@ module.exports = function(eleventyConfig) {
     hours: 'auto',
     minutes: true,
     seconds: false,
-    prepend: null,
-    append: null,
-    digits: 1,
+    digits: 1
+    output: function(data) {
+      return data.text;
+    }
   });
 }
 ```
@@ -92,7 +92,7 @@ module.exports = function(eleventyConfig) {
 ### Speed
 
 - Default: '1000 characters per minute'
-- Accepts: A String formatted as: Number characters/words [optional preposition] hour/minute/second
+- Accepts: A String formatted as: Number 'characters'/'words' [optional preposition] 'hour'/'minute'/'second'
 
 The speed to calculate the time to read with. E.g. '250 words a minute', '5 words per second'.
 
@@ -180,33 +180,9 @@ Whether to show (*true*) or hide (*false*) minutes. 'auto' will only display min
 ### Seconds
 
 - Default: 'false'
-- Accepts: Boolean, 'auto' or 'only'
+- Accepts: Boolean, 'auto'
 
-Whether to show (*true*) or hide (*false*) seconds. 'auto' will only display seconds when they are greater than zero. 'only' displays seconds without any text; overriding *hours*, *minutes* and *pre/append* options.
-
-### Prepend
-
-- Default: null
-- Accepts: String or Null
-
-Adds a string to the beginning of Time To Read's output, for example:
-
-- 'About ' = About 3 minutes, 10 seconds
-- '~' = ~3 minutes, 10 seconds
-
-Does not add spaces automatically. Will not be translated.
-
-### Append
-
-- Default: null
-- Accepts: String or Null
-
-Adds a string to the end of Time To Read's output, for example:
-
-- ' to read' = 3 minutes, 10 seconds to read
-- '-ish' = 3 minutes, 10 seconds-ish
-
-Does not add spaces automatically. Will not be translated.
+Whether to show (*true*) or hide (*false*) seconds. 'auto' will only display seconds when they are greater than zero.
 
 ### Digits
 
@@ -219,6 +195,38 @@ The minimum number of digits to display. Will pad with 0 if not met, for example
 - 2 = 03 minutes, 10 seconds
 - 3 = 003 minutes, 010 seconds
 
+### Output
+
+- Default: function(data) { return data.text; }
+- Accepts: Function
+
+Controls the output of Time To Read via a callback function. Will be passed an object with the following keys:
+```js
+{
+  text, // [String] the computed output text, for example: '3 minutes to read'
+  hours, // [Number|Null] the number of hours required to read the given text (if applicable)
+  minutes, // [Number|Null] the number of minutes required to read the given text after hours have been deducted (if applicable)
+  seconds, // [Number|Null] the number of seconds required to read the given text after hours and minutes have been deducted (if applicable)
+  totalSeconds, // [Number] the number of seconds required to read the given text
+  speed: { // [Object] The parsed data from the speed option
+    amount, // [Number] the amount of measures per interval
+    measure, // [String] 'character' or 'word'
+    interval // [String] 'hour', 'minute' or 'second'
+  },
+  language // [String] returns the string passed to the language option
+}
+```
+
+Can be used to customise text, for example:
+```js
+function (data) {
+  const numberOfEmoji = Math.max(1, Math.round(data.totalSeconds / 60));
+  const emojiString = '🕒'.repeat(numberOfEmoji);
+
+  return `${emojiString} ${data.text} (roughly)`; // 🕒🕒🕒 3 minutes to read (roughly)
+}
+```
+
 
 ## Example
 
@@ -230,14 +238,14 @@ How to create a blog page listing all posts with their reading times as well as 
 _includes
 └─ post.liquid
 blog
-├─ blog.html
 └─ post.md
+blog.html
 .eleventy.js
 ```
 
 #### _includes/post.liquid
 
-``` liquid
+```liquid
 <header>
   <h1>{{ title }}</h1>
   <p>About {{ content | timeToRead }} to read</p>
@@ -248,9 +256,20 @@ blog
 </main>
 ```
 
-#### blog/blog.html
+#### blog/post.md
 
-``` html
+```md
+---
+layout: post.liquid
+title: Lorem Ipsum
+tags: blogPost
+---
+Lorem ipsum dolor sit…
+```
+
+#### blog.html
+
+```html
 <h1>Blog</h1>
 
 <ul>
@@ -263,20 +282,9 @@ blog
 </ul>
 ```
 
-#### blog/post.md
-
-``` md
----
-layout: post.liquid
-title: Lorem Ipsum
-tags: blogPost
----
-Lorem ipsum dolor sit…
-```
-
 #### .eleventy.js
 
-``` js
+```js
 const timeToRead = require('eleventy-plugin-time-to-read');
 
 module.exports = function(eleventyConfig) {
