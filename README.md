@@ -223,7 +223,7 @@ function (data) {
   const numberOfEmoji = Math.max(1, Math.round(data.totalSeconds / 60));
   const emojiString = '🕒'.repeat(numberOfEmoji);
 
-  return `${emojiString} ${data.text} (roughly)`; // 🕒🕒🕒 3 minutes to read (roughly)
+  return `${emojiString} ${data.text} to read`; // 🕒🕒🕒 3 minutes to read
 }
 ```
 
