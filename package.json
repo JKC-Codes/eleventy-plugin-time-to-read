@@ -62,6 +62,7 @@
 	"ava": {
 		"files": [
 			"!./tests/test-site/**"
-		]
+		],
+		"failFast": true
 	}
 }
