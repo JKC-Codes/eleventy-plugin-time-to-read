@@ -16,7 +16,7 @@ module.exports = function(customOptions) {
 			Object.assign(options, option);
 		}
 		else {
-			throw new Error(`Time-to-read encountered an unrecognised option: ${option}`);
+			throw new Error(`Time-to-read encountered an unrecognised option: ${JSON.stringify(option)}`);
 		}
 	})
 	return options;
