@@ -7,7 +7,12 @@ module.exports = {
 	hours: 'auto',
 	minutes: true,
 	seconds: false,
+	digits: 1,
+	output: function(data) {
+		return data.text;
+	},
+
+	// Deprecated, remove in 2.0 major release
 	prepend: null,
 	append: null,
-	digits: 1
 }
