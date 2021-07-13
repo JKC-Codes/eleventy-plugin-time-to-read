@@ -9,7 +9,7 @@ module.exports = {
 	seconds: false,
 	digits: 1,
 	output: function(data) {
-		return data.text;
+		return data.timing;
 	},
 
 	// Deprecated, remove in 2.0 major release

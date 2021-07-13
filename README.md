@@ -83,7 +83,7 @@ module.exports = function(eleventyConfig) {
     seconds: false,
     digits: 1
     output: function(data) {
-      return data.text;
+      return data.timing;
     }
   });
 }
@@ -197,13 +197,13 @@ The minimum number of digits to display. Will pad with 0 if not met, for example
 
 ### Output
 
-- Default: function(data) { return data.text; }
+- Default: function(data) { return data.timing; }
 - Accepts: Function
 
 Controls the output of Time To Read via a callback function. Will be passed an object with the following keys:
 ```js
 {
-  text, // [String] the computed output text, for example: '3 minutes to read'
+  timing, // [String] the computed reading time, for example: '3 minutes, 10 seconds'
   hours, // [Number|Null] the number of hours required to read the given text (if applicable)
   minutes, // [Number|Null] the number of minutes required to read the given text after hours have been deducted (if applicable)
   seconds, // [Number|Null] the number of seconds required to read the given text after hours and minutes have been deducted (if applicable)
@@ -223,7 +223,7 @@ function (data) {
   const numberOfEmoji = Math.max(1, Math.round(data.totalSeconds / 60));
   const emojiString = '🕒'.repeat(numberOfEmoji);
 
-  return `${emojiString} ${data.text} to read`; // 🕒🕒🕒 3 minutes to read
+  return `${emojiString} ${data.timing} to read`; // 🕒🕒🕒 3 minutes to read
 }
 ```
 
