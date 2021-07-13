@@ -41,10 +41,6 @@ test('rejects invalid language argument types', t => {
 	});
 
 	t.throws(()=> {
-		validator({	language: null });
-	});
-
-	t.throws(()=> {
 		validator({ language: true });
 	});
 

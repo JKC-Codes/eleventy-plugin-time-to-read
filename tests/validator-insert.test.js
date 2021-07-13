@@ -1,3 +1,5 @@
+// Deprecated, remove in 2.0 major release
+
 const test = require('ava');
 const validator = require('../components/options-validator.js');
 
@@ -5,6 +7,7 @@ const validator = require('../components/options-validator.js');
 test('accepts String as insert', t => {
 	const testArgument1 = 'foo';
 	const testArgument2 = '';
+
 	t.is(validator({ prepend: testArgument1 }).prepend, testArgument1);
 	t.is(validator({ append: testArgument1 }).append, testArgument1);
 
@@ -14,16 +17,10 @@ test('accepts String as insert', t => {
 
 test('accepts Number as insert', t => {
 	const testArgument = 123;
+
 	t.is(validator({ prepend: testArgument }).prepend, testArgument);
 	t.is(validator({ append: testArgument }).append, testArgument);
 });
-
-test('accepts Null as insert', t => {
-	const testArgument = null;
-	t.is(validator({ prepend: testArgument }).prepend, testArgument);
-	t.is(validator({ append: testArgument }).append, testArgument);
-});
-
 
 test('rejects invalid insert argument types', t => {
 	t.throws(()=> {

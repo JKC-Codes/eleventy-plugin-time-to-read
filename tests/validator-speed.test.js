@@ -6,6 +6,7 @@ const validator = require('../components/options-validator.js');
 test('accepts speed number as integer', t => {
 	const testArgument1 = '250 words a minute';
 	const testArgument2 = '099 words a minute';
+
 	t.is(validator({ speed: testArgument1 }).speed, testArgument1);
 	t.is(validator({ speed: testArgument2 }).speed, testArgument2);
 });
@@ -14,6 +15,7 @@ test('accepts speed number as decimal', t => {
 	const testArgument1 = '1.5 words a minute';
 	const testArgument2 = '01.9 words a minute';
 	const testArgument3 = '060.07 words a minute';
+
 	t.is(validator({ speed: testArgument1 }).speed, testArgument1);
 	t.is(validator({ speed: testArgument2 }).speed, testArgument2);
 	t.is(validator({ speed: testArgument3 }).speed, testArgument3);
@@ -35,16 +37,18 @@ test('rejects invalid speed number', t => {
 
 
 // Measure unit
-test('accepts \'word\' as speed measure', t => {
+test(`accepts 'word' as speed measure`, t => {
 	const testArgument1 = '250 word a minute';
 	const testArgument2 = '250 words a minute';
+
 	t.is(validator({ speed: testArgument1 }).speed, testArgument1);
 	t.is(validator({ speed: testArgument2 }).speed, testArgument2);
 });
 
-test('accepts \'character\' as speed measure', t => {
+test(`accepts 'character' as speed measure`, t => {
 	const testArgument1 = '250 character a minute';
 	const testArgument2 = '250 characters a minute';
+
 	t.is(validator({ speed: testArgument1 }).speed, testArgument1);
 	t.is(validator({ speed: testArgument2 }).speed, testArgument2);
 });
@@ -65,23 +69,26 @@ test('rejects invalid speed measure', t => {
 
 
 // Time unit
-test('accepts \'hour\' as speed time unit', t => {
+test(`accepts 'hour' as speed time unit`, t => {
 	const testArgument1 = '250 words a hour';
 	const testArgument2 = '250 words a hours';
+
 	t.is(validator({ speed: testArgument1 }).speed, testArgument1);
 	t.is(validator({ speed: testArgument2 }).speed, testArgument2);
 });
 
-test('accepts \'minute\' as speed time unit', t => {
+test(`accepts 'minute' as speed time unit`, t => {
 	const testArgument1 = '250 words a minute';
 	const testArgument2 = '250 words a minutes';
+
 	t.is(validator({ speed: testArgument1 }).speed, testArgument1);
 	t.is(validator({ speed: testArgument2 }).speed, testArgument2);
 });
 
-test('accepts \'second\' as speed time unit', t => {
+test(`accepts 'second' as speed time unit`, t => {
 	const testArgument1 = '250 words a second';
 	const testArgument2 = '250 words a seconds';
+
 	t.is(validator({ speed: testArgument1 }).speed, testArgument1);
 	t.is(validator({ speed: testArgument2 }).speed, testArgument2);
 });
@@ -113,10 +120,6 @@ test('rejects invalid speed argument types', t => {
 
 	t.throws(()=> {
 		validator({ speed: {number: 250} });
-	});
-
-	t.throws(()=> {
-		validator({ speed: null	});
 	});
 
 	t.throws(()=> {

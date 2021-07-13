@@ -2,22 +2,25 @@ const test = require('ava');
 const validator = require('../components/options-validator.js');
 
 
-test('accepts \'narrow\' as style', t => {
+test(`accepts 'narrow' as style`, t => {
 	const testArgument = 'narrow';
+
 	t.is(validator({ style: testArgument }).style, testArgument);
 });
 
-test('accepts \'short\' as style', t => {
+test(`accepts 'short' as style`, t => {
 	const testArgument = 'short';
+
 	t.is(validator({ style: testArgument }).style, testArgument);
 });
 
-test('accepts \'long\' as style', t => {
+test(`accepts 'long' as style`, t => {
 	const testArgument = 'long';
+
 	t.is(validator({ style: testArgument }).style, testArgument);
 });
 
-test('rejects invalid styles', t => {
+test('rejects invalid style strings', t => {
 	t.throws(()=> {
 		validator({	style: 'foo' });
 	});
@@ -42,10 +45,6 @@ test('rejects invalid style argument types', t => {
 
 	t.throws(()=> {
 		validator({ style: {type: 'narrow'}	});
-	});
-
-	t.throws(()=> {
-		validator({ style: null	});
 	});
 
 	t.throws(()=> {

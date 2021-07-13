@@ -49,10 +49,6 @@ test('rejects invalid digits argument types', t => {
 	});
 
 	t.throws(()=> {
-		validator({ digits: null });
-	});
-
-	t.throws(()=> {
 		validator({ digits: true });
 	});
 
