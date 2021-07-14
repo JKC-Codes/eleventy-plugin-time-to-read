@@ -18,9 +18,10 @@ function measureTime(text, options = {}) {
 		hours: 'auto',
 		minutes: 'auto',
 		seconds: 'auto',
-		prepend: null,
-		append: null,
-		digits: 1
+		digits: 1,
+		output: function(data) { return data.timing; },
+		prepend: null, // Deprecated, remove in 2.0 major release
+		append: null, // Deprecated, remove in 2.0 major release
 	}
 	const fullOptions = Object.assign({}, defaultOptions, options);
 	return measureTimeFunction(text, fullOptions);
@@ -56,41 +57,41 @@ test('only accepts string or template', t => {
 });
 
 test('ignores html', t => {
-	t.is(measureTime('<!-- this comment should be ignored -->', {seconds: 'only'}), 0);
+	t.is(measureTime('<!-- this comment should be ignored -->', {output: function(data) { return data.totalSeconds; }}), 0);
 
-	t.is(measureTime('<p class="these tags should be ignored"></p>', {seconds: 'only'}), 0);
+	t.is(measureTime('<p class="these tags should be ignored"></p>', {output: function(data) { return data.totalSeconds; }}), 0);
 
-	t.is(measureTime(`${characters(10)} <!-- ignored comment --> ${characters(10)} <p class="ignored tag and class">characters</p> ${characters(10)}`, {seconds: 'only'}), 40);
+	t.is(measureTime(`${characters(10)} <!-- ignored comment --> ${characters(10)} <p class="ignored tag and class">characters</p> ${characters(10)}`, {output: function(data) { return data.totalSeconds; }}), 40);
 });
 
 test('calculates correct speed', t => {
-	t.is(measureTime('', {seconds: 'only'}), 0);
-	t.is(measureTime('a', {seconds: 'only'}), 1);
-	t.is(measureTime(characters(456), {seconds: 'only'}), 456);
-	t.is(measureTime(characters(456), {speed: '10 characters per second', seconds: 'only'}), 46);
+	t.is(measureTime('', {output: function(data) { return data.totalSeconds; }}), 0);
+	t.is(measureTime('a', {output: function(data) { return data.totalSeconds; }}), 1);
+	t.is(measureTime(characters(456), {output: function(data) { return data.totalSeconds; }}), 456);
+	t.is(measureTime(characters(456), {speed: '10 characters per second', output: function(data) { return data.totalSeconds; }}), 46);
 
-	t.is(measureTime('', {speed: '1 word per second', seconds: 'only'}), 0);
-	t.is(measureTime('word', {speed: '1 word per second', seconds: 'only'}), 1);
-	t.is(measureTime(words(789), {speed: '1 word per second', seconds: 'only'}), 789);
-	t.is(measureTime(words(789), {speed: '10 words per second', seconds: 'only'}), 79);
+	t.is(measureTime('', {speed: '1 word per second', output: function(data) { return data.totalSeconds; }}), 0);
+	t.is(measureTime('word', {speed: '1 word per second', output: function(data) { return data.totalSeconds; }}), 1);
+	t.is(measureTime(words(789), {speed: '1 word per second', output: function(data) { return data.totalSeconds; }}), 789);
+	t.is(measureTime(words(789), {speed: '10 words per second', output: function(data) { return data.totalSeconds; }}), 79);
 
-	t.is(measureTime('', {speed: '1 character per minute', seconds: 'only'}), 0);
-	t.is(measureTime('a', {speed: '1 character per minute', seconds: 'only'}), 60);
-	t.is(measureTime(characters(154), {speed: '1 character per minute', seconds: 'only'}), 9240);
-	t.is(measureTime(characters(154), {speed: '10 characters per minute', seconds: 'only'}), 924);
+	t.is(measureTime('', {speed: '1 character per minute', output: function(data) { return data.totalSeconds; }}), 0);
+	t.is(measureTime('a', {speed: '1 character per minute', output: function(data) { return data.totalSeconds; }}), 60);
+	t.is(measureTime(characters(154), {speed: '1 character per minute', output: function(data) { return data.totalSeconds; }}), 9240);
+	t.is(measureTime(characters(154), {speed: '10 characters per minute', output: function(data) { return data.totalSeconds; }}), 924);
 
-	t.is(measureTime('', {speed: '1 character per hour', seconds: 'only'}), 0);
-	t.is(measureTime('a', {speed: '1 character per hour', seconds: 'only'}), 3600);
-	t.is(measureTime(characters(45), {speed: '1 character per hour', seconds: 'only'}), 162000);
-	t.is(measureTime(characters(45), {speed: '10 characters per hour', seconds: 'only'}), 16200);
+	t.is(measureTime('', {speed: '1 character per hour', output: function(data) { return data.totalSeconds; }}), 0);
+	t.is(measureTime('a', {speed: '1 character per hour', output: function(data) { return data.totalSeconds; }}), 3600);
+	t.is(measureTime(characters(45), {speed: '1 character per hour', output: function(data) { return data.totalSeconds; }}), 162000);
+	t.is(measureTime(characters(45), {speed: '10 characters per hour', output: function(data) { return data.totalSeconds; }}), 16200);
 });
 
 test('outputs multiple languages', t => {
-	t.is(measureTime('a', {language: 'en', seconds: true}), '1 second');
+	t.is(measureTime('a', {language: 'en'}), '1 second');
 
-	t.is(measureTime('a', {language: 'es', seconds: true}), '1 segundo');
+	t.is(measureTime('a', {language: 'es'}), '1 segundo');
 
-	t.is(measureTime('a', {language: 'zh-u-nu-hanidec', seconds: true}), '一秒钟');
+	t.is(measureTime('a', {language: 'zh-u-nu-hanidec'}), '一秒钟');
 });
 
 test('outputs different styles', t => {
@@ -141,16 +142,6 @@ test('outputs rounded times correctly', t => {
 	t.is(measureTime(characters(5400), {hours: true, minutes: false, seconds: true}), '1 hour, 1,800 seconds');
 });
 
-test('outputs with pre/append', t => {
-	t.is(measureTime('a', {prepend: 'foo'}), 'foo1 second');
-	t.is(measureTime('a', {prepend: 'bar '}), 'bar 1 second');
-	t.is(measureTime('a', {prepend: '2 '}), '2 1 second');
-
-	t.is(measureTime('a', {append: 'foo'}), '1 secondfoo');
-	t.is(measureTime('a', {append: ' bar'}), '1 second bar');
-	t.is(measureTime('a', {append: ' 2'}), '1 second 2');
-});
-
 test('outputs padded digits', t => {
 	t.is(measureTime('foo', {digits: 1}), '3 seconds');
 	t.is(measureTime('foo', {digits: 2}), '03 seconds');
@@ -159,4 +150,52 @@ test('outputs padded digits', t => {
 	t.is(measureTime(characters(90), {digits: 1, minutes: false}), '90 seconds');
 	t.is(measureTime(characters(90), {digits: 2, minutes: false}), '90 seconds');
 	t.is(measureTime(characters(90), {digits: 3, minutes: false}), '090 seconds');
+});
+
+test('passes correct arguments to output', t => {
+	const arguments = {
+		hours: true,
+		minutes: true,
+		seconds: true,
+		speed: '5 characters a minute',
+		language: 'es',
+		output: function(data) {
+			return JSON.stringify([
+				data.timing,
+				data.hours,
+				data.minutes,
+				data.seconds,
+				data.totalSeconds,
+				data.speed.amount,
+				data.speed.measure,
+				data.speed.interval,
+				data.language
+			]);
+		}
+	}
+
+	t.is(measureTime('foobarbaz', arguments), `["0 horas, 1 minuto y 48 segundos",0,1,48,108,5,"character","minute","es"]`);
+});
+
+test('output can be modified', t => {
+	const outputFunction = function (data) {
+		const numberOfEmoji = Math.max(1, Math.round(data.totalSeconds / 60));
+		const emojiString = '🕒'.repeat(numberOfEmoji);
+
+		return `${emojiString} ${data.timing} to read`;
+	}
+
+	t.is(measureTime(characters(180), {output: outputFunction}), '🕒🕒🕒 3 minutes to read');
+});
+
+
+// Deprecated, remove in 2.0 major release
+test('outputs with pre/append', t => {
+	t.is(measureTime('a', {prepend: 'foo'}), 'foo1 second');
+	t.is(measureTime('a', {prepend: 'bar '}), 'bar 1 second');
+	t.is(measureTime('a', {prepend: '2 '}), '2 1 second');
+
+	t.is(measureTime('a', {append: 'foo'}), '1 secondfoo');
+	t.is(measureTime('a', {append: ' bar'}), '1 second bar');
+	t.is(measureTime('a', {append: ' 2'}), '1 second 2');
 });

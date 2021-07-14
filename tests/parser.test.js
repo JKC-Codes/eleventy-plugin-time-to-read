@@ -53,9 +53,14 @@ test('accepts object argument', t => {
 		hours: 'auto',
 		minutes: true,
 		seconds: false,
-		prepend: null,
-		append: null,
-		digits: 1
+		digits: 1,
+		output: function(data) {
+			return data.timing;
+		},
+
+		// Deprecated, remove in 2.0 major release
+		prepend: 'foo',
+		append: 'bar'
 	};
 
 	t.is(parser([testArgument]).speed, testArgument.speed);
@@ -65,7 +70,10 @@ test('accepts object argument', t => {
 	t.is(parser([testArgument]).hours, testArgument.hours);
 	t.is(parser([testArgument]).minutes, testArgument.minutes);
 	t.is(parser([testArgument]).seconds, testArgument.seconds);
+	t.is(parser([testArgument]).digits, testArgument.digits);
+	t.is(parser([testArgument]).output, testArgument.output);
+
+	// Deprecated, remove in 2.0 major release
 	t.is(parser([testArgument]).prepend, testArgument.prepend);
 	t.is(parser([testArgument]).append, testArgument.append);
-	t.is(parser([testArgument]).digits, testArgument.digits);
 });
