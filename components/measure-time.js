@@ -1,46 +1,36 @@
 const regEx = require('./regular-expressions.js');
 
 module.exports = function(content, options) {
-	const totalSeconds = getTotalSeconds(content, options.speed);
+	const text = convertToPlainText(content);
+	const parsedSpeed = parseSpeedOption(options.speed);
+	const totalSeconds = getTotalSeconds(text, parsedSpeed);
+	const timings = getTimings(totalSeconds, options.hours, options.minutes, options.seconds);
+	let sentence = getTimeToRead(timings, options.language, options.style, options.type, options.digits);
 
+	// Deprecated, remove in 2.0 major release
 	if(/^only$/i.test(options.seconds)) {
 		return totalSeconds;
 	}
 	else {
-		let sentence = getTimeToRead(totalSeconds, options);
 		if(options.prepend !== null) {
 			sentence = options.prepend + sentence;
 		}
 		if(options.append !== null) {
 			sentence = sentence + options.append;
 		};
-		return sentence;
 	}
+
+	return options.output({
+		timing: sentence,
+		hours: timings.hours,
+		minutes: timings.minutes,
+		seconds: timings.seconds,
+		totalSeconds: totalSeconds,
+		speed: parsedSpeed,
+		language: options.language
+	});
 }
 
-
-function getTotalSeconds(content, speed) {
-	const text = convertToPlainText(content);
-	const { amount, measure, interval } = parseSpeedOption(speed);
-	let count;
-
-	if(measure === 'word') {
-		// Split words by whitespace and remove any empty values
-		count = text.split(/\s+/).filter(word => word).length;
-	}
-	else if(measure === 'character') {
-		// Remove all whitespace and normalise non-latin characters
-		count = text.replace(/\s+/g, '').normalize('NFC').length;
-	}
-
-	// Normalise to seconds
-	switch(interval) {
-		case('hour'): count *= 60;
-		case('minute'): count *= 60;
-	}
-
-	return Math.ceil(count / amount);
-}
 
 function convertToPlainText(content) {
 	const html = content.templateContent || content;
@@ -70,37 +60,28 @@ function parseSpeedOption(speedOption) {
 	};
 }
 
-function getTimeToRead(totalSeconds, options) {
-	const { hours, minutes, seconds, language, style, type, digits } = options;
-	const times = getTimes(totalSeconds, hours, minutes, seconds);
+function getTotalSeconds(text, speed) {
+	let count;
 
-	function addLabel(unit, amount) {
-		return new Intl.NumberFormat(language, {
-			style: 'unit',
-			unit: unit,
-			unitDisplay: style,
-			minimumIntegerDigits: digits
-		}).format(amount);
+	if(speed.measure === 'word') {
+		// Split words by whitespace and remove any empty values
+		count = text.split(/\s+/).filter(word => word).length;
 	}
-
-	let timeUnits = [];
-	if(times.hours !== null) {
-		timeUnits.push(addLabel('hour', times.hours));
-	}
-	if(times.minutes !== null) {
-		timeUnits.push(addLabel('minute', times.minutes));
-	}
-	if(times.seconds !== null) {
-		timeUnits.push(addLabel('second', times.seconds));
+	else if(speed.measure === 'character') {
+		// Remove all whitespace and normalise non-latin characters
+		count = text.replace(/\s+/g, '').normalize('NFC').length;
 	}
 
-	return new Intl.ListFormat(language, {
-		type: type,
-		style: style
-	}).format(timeUnits);
+	// Normalise to seconds
+	switch(speed.interval) {
+		case('hour'): count *= 60;
+		case('minute'): count *= 60;
+	}
+
+	return Math.ceil(count / speed.amount);
 }
 
-function getTimes(totalSeconds, showHours, showMinutes, showSeconds, ) {
+function getTimings(totalSeconds, showHours, showMinutes, showSeconds) {
 	let hours, minutes, seconds;
 
 	if(showHours && showMinutes && !showSeconds) {
@@ -144,4 +125,32 @@ function getTimes(totalSeconds, showHours, showMinutes, showSeconds, ) {
 	}
 
 	return { hours, minutes, seconds };
+}
+
+function getTimeToRead(timings, language, style, type, digits) {
+
+	function addLabel(unit, amount) {
+		return new Intl.NumberFormat(language, {
+			style: 'unit',
+			unit: unit,
+			unitDisplay: style,
+			minimumIntegerDigits: digits
+		}).format(amount);
+	}
+
+	let timeUnits = [];
+	if(timings.hours !== null) {
+		timeUnits.push(addLabel('hour', timings.hours));
+	}
+	if(timings.minutes !== null) {
+		timeUnits.push(addLabel('minute', timings.minutes));
+	}
+	if(timings.seconds !== null) {
+		timeUnits.push(addLabel('second', timings.seconds));
+	}
+
+	return new Intl.ListFormat(language, {
+		type: type,
+		style: style
+	}).format(timeUnits);
 }
