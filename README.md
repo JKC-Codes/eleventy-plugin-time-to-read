@@ -81,7 +81,7 @@ module.exports = function(eleventyConfig) {
     hours: 'auto',
     minutes: true,
     seconds: false,
-    digits: 1
+    digits: 1,
     output: function(data) {
       return data.timing;
     }
