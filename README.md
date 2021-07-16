@@ -200,22 +200,18 @@ The minimum number of digits to display. Will pad with 0 if not met, for example
 - Default: function(data) { return data.timing; }
 - Accepts: Function
 
-Controls the output of Time To Read via a callback function. Will be passed an object with the following keys:
-```js
-{
-  timing, // [String] the computed reading time, for example: '3 minutes, 10 seconds'
-  hours, // [Number|Null] the number of hours required to read the given text (if applicable)
-  minutes, // [Number|Null] the number of minutes required to read the given text after hours have been deducted (if applicable)
-  seconds, // [Number|Null] the number of seconds required to read the given text after hours and minutes have been deducted (if applicable)
-  totalSeconds, // [Number] the number of seconds required to read the given text
-  speed: { // [Object] The parsed data from the speed option
-    amount, // [Number] the amount of measures per interval
-    measure, // [String] 'character' or 'word'
-    interval // [String] 'hour', 'minute' or 'second'
-  },
-  language // [String] returns the string passed to the language option
-}
-```
+Controls the output of Time To Read via a callback function's return value. Will be passed an object with the following keys:
+
+- timing - [String] the computed reading time, for example: '3 minutes, 10 seconds'
+- hours - [Number|Null] the number of hours required to read the given text (if applicable)
+- minutes - [Number|Null] the number of minutes required to read the given text after hours have been deducted (if applicable)
+- seconds - [Number|Null] the number of seconds required to read the given text after hours and minutes have been deducted (if applicable)
+- totalSeconds - [Number] the number of seconds required to read the given text
+- speed - [Object] The parsed data from the speed option. Has the following keys:
+  - amount - [Number] the amount of measures per interval
+  - measure - [String] 'character' or 'word'
+  - interval - [String] 'hour', 'minute' or 'second'
+- language - [String] returns the string passed to the language option
 
 Can be used to customise text, for example:
 ```js
