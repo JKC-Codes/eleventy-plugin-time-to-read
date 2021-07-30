@@ -180,7 +180,7 @@ Whether to show (*true*) or hide (*false*) minutes. 'auto' will only display min
 ### Seconds
 
 - Default: 'false'
-- Accepts: Boolean, 'auto'
+- Accepts: Boolean or 'auto'
 
 Whether to show (*true*) or hide (*false*) seconds. 'auto' will only display seconds when they are greater than zero.
 
