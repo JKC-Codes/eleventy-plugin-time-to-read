@@ -44,7 +44,7 @@
 		"prepublishOnly": "npm run test"
 	},
 	"devDependencies": {
-		"@11ty/eleventy": "^0.12.0",
+		"@11ty/eleventy": "^1.0.0",
 		"ava": "^4.0.0",
 		"concurrently": "^7.0.0"
 	},
