@@ -206,11 +206,12 @@ Controls the output of Time To Read via a callback function's return value. Will
 - hours - [Number|Null] the number of hours required to read the given text (if applicable)
 - minutes - [Number|Null] the number of minutes required to read the given text after hours have been deducted (if applicable)
 - seconds - [Number|Null] the number of seconds required to read the given text after hours and minutes have been deducted (if applicable)
+- count - [Number] the amount of characters or words
 - totalSeconds - [Number] the number of seconds required to read the given text
 - speed - [Object] The parsed data from the speed option. Has the following keys:
-  - amount - [Number] the amount of measures per interval
   - measure - [String] 'character' or 'word'
   - interval - [String] 'hour', 'minute' or 'second'
+  - amount - [Number] the amount of measures per interval
 - language - [String] returns the string passed to the language option
 
 Can be used to customise text, for example:
