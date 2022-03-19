@@ -3,7 +3,8 @@ const regEx = require('./regular-expressions.js');
 module.exports = function(content, options) {
 	const text = convertToPlainText(content);
 	const parsedSpeed = parseSpeedOption(options.speed);
-	const totalSeconds = getTotalSeconds(text, parsedSpeed);
+	const count = getCount(text, parsedSpeed);
+	const totalSeconds = getTotalSeconds(count, parsedSpeed);
 	const timings = getTimings(totalSeconds, options.hours, options.minutes, options.seconds);
 	let sentence = getTimeToRead(timings, options.language, options.style, options.type, options.digits);
 
@@ -25,6 +26,7 @@ module.exports = function(content, options) {
 		hours: timings.hours,
 		minutes: timings.minutes,
 		seconds: timings.seconds,
+		count: count,
 		totalSeconds: totalSeconds,
 		speed: parsedSpeed,
 		language: options.language
@@ -60,7 +62,7 @@ function parseSpeedOption(speedOption) {
 	};
 }
 
-function getTotalSeconds(text, speed) {
+function getCount(text, speed) {
 	let count;
 
 	if(speed.measure === 'word') {
@@ -72,6 +74,10 @@ function getTotalSeconds(text, speed) {
 		count = text.replace(/\s+/g, '').normalize('NFC').length;
 	}
 
+	return count;
+}
+
+function getTotalSeconds(count, speed) {
 	// Normalise to seconds
 	switch(speed.interval) {
 		case('hour'): count *= 60;
