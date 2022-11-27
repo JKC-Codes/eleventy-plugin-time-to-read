@@ -67,21 +67,25 @@ test('ignores html', t => {
 test('calculates correct speed', t => {
 	t.is(measureTime('', {output: function(data) { return data.totalSeconds; }}), 0);
 	t.is(measureTime('a', {output: function(data) { return data.totalSeconds; }}), 1);
+	t.is(measureTime(' a ', {output: function(data) { return data.totalSeconds; }}), 1);
 	t.is(measureTime(characters(456), {output: function(data) { return data.totalSeconds; }}), 456);
 	t.is(measureTime(characters(456), {speed: '10 characters per second', output: function(data) { return data.totalSeconds; }}), 46);
 
 	t.is(measureTime('', {speed: '1 word per second', output: function(data) { return data.totalSeconds; }}), 0);
 	t.is(measureTime('word', {speed: '1 word per second', output: function(data) { return data.totalSeconds; }}), 1);
+	t.is(measureTime(' word ', {speed: '1 word per second', output: function(data) { return data.totalSeconds; }}), 1);
 	t.is(measureTime(words(789), {speed: '1 word per second', output: function(data) { return data.totalSeconds; }}), 789);
 	t.is(measureTime(words(789), {speed: '10 words per second', output: function(data) { return data.totalSeconds; }}), 79);
 
 	t.is(measureTime('', {speed: '1 character per minute', output: function(data) { return data.totalSeconds; }}), 0);
 	t.is(measureTime('a', {speed: '1 character per minute', output: function(data) { return data.totalSeconds; }}), 60);
+	t.is(measureTime(' a ', {speed: '1 character per minute', output: function(data) { return data.totalSeconds; }}), 60);
 	t.is(measureTime(characters(154), {speed: '1 character per minute', output: function(data) { return data.totalSeconds; }}), 9240);
 	t.is(measureTime(characters(154), {speed: '10 characters per minute', output: function(data) { return data.totalSeconds; }}), 924);
 
 	t.is(measureTime('', {speed: '1 character per hour', output: function(data) { return data.totalSeconds; }}), 0);
 	t.is(measureTime('a', {speed: '1 character per hour', output: function(data) { return data.totalSeconds; }}), 3600);
+	t.is(measureTime(' a ', {speed: '1 character per hour', output: function(data) { return data.totalSeconds; }}), 3600);
 	t.is(measureTime(characters(45), {speed: '1 character per hour', output: function(data) { return data.totalSeconds; }}), 162000);
 	t.is(measureTime(characters(45), {speed: '10 characters per hour', output: function(data) { return data.totalSeconds; }}), 16200);
 });
