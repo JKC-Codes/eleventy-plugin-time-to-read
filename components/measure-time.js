@@ -3,8 +3,8 @@ const regEx = require('./regular-expressions.js');
 module.exports = function(content, options) {
 	const text = convertToPlainText(content);
 	const parsedSpeed = parseSpeedOption(options.speed);
-	const count = getCount(text, parsedSpeed);
-	const totalSeconds = getTotalSeconds(count, parsedSpeed);
+	const counts = getCounts(text);
+	const totalSeconds = getTotalSeconds(counts, parsedSpeed);
 	const timings = getTimings(totalSeconds, options.hours, options.minutes, options.seconds);
 	let sentence = getTimeToRead(timings, options.language, options.style, options.type, options.digits);
 
@@ -26,7 +26,9 @@ module.exports = function(content, options) {
 		hours: timings.hours,
 		minutes: timings.minutes,
 		seconds: timings.seconds,
-		count: count,
+		totalCharacters: counts.characters,
+		totalWords: counts.words,
+		count: parsedSpeed.measure === 'word' ? counts.words : counts.characters, // Deprecated, remove in 2.0 major release
 		totalSeconds: totalSeconds,
 		speed: parsedSpeed,
 		language: options.language
@@ -62,22 +64,46 @@ function parseSpeedOption(speedOption) {
 	};
 }
 
-function getCount(text, speed) {
-	let count;
+function getCounts(text) {
+	const counts = {
+		characters: 0,
+		words: 0
+	};
+	let currentWord = '';
 
-	if(speed.measure === 'word') {
-		// Split words by whitespace and remove any empty values
-		count = text.split(/\s+/).filter(word => word).length;
-	}
-	else if(speed.measure === 'character') {
-		// Remove all whitespace and normalise non-latin characters
-		count = text.replace(/\s+/g, '').normalize('NFC').length;
+	for(const character of text) {
+		// If the character is whitespace
+		if(/\s/.test(character)) {
+			if(currentWord === '') {
+				continue;
+			}
+			else {
+				counts.characters += currentWord.normalize('NFC').length;
+				counts.words++;
+				currentWord = '';
+			}
+		}
+		else {
+			currentWord += character;
+		}
 	}
 
-	return count;
+	if(currentWord !== '') {
+		counts.characters += currentWord.normalize('NFC').length;
+		counts.words++;
+	}
+
+	return counts;
 }
 
 function getTotalSeconds(count, speed) {
+	if(speed.measure === 'word') {
+		count = count.words;
+	}
+	else if(speed.measure === 'character') {
+		count = count.characters;
+	}
+
 	// Normalise to seconds
 	switch(speed.interval) {
 		case('hour'): count *= 60;
