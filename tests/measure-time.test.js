@@ -169,7 +169,9 @@ test('passes correct arguments to output', t => {
 				data.hours,
 				data.minutes,
 				data.seconds,
-				data.count,
+				data.count, // Deprecated, remove in 2.0 major release
+				data.totalCharacters,
+				data.totalWords,
 				data.totalSeconds,
 				data.speed.amount,
 				data.speed.measure,
@@ -179,7 +181,7 @@ test('passes correct arguments to output', t => {
 		}
 	}
 
-	t.is(measureTime('foobarbaz', arguments), `["0 horas, 1 minuto y 48 segundos",0,1,48,9,108,5,"character","minute","es"]`);
+	t.is(measureTime('foobarbaz', arguments), `["0 horas, 1 minuto y 48 segundos",0,1,48,9,9,1,108,5,"character","minute","es"]`);
 });
 
 test('output can be modified', t => {
