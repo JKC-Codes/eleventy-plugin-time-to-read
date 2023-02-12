@@ -7,7 +7,7 @@ eleventyExcludeFromCollections: true
 	{%- for page in collections.all %}
 		<li class="test">
 			<a href="{{ page.url }}" class="title">{{ page.data.title }}</a> &mdash; <span class="status">checking status&hellip;</span>
-			{{ page.templateContent }}
+			{{ page.content }}
 		</li>
 	{%- endfor %}
 </ul>

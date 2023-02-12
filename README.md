@@ -274,7 +274,7 @@ Lorem ipsum dolor sit…
   {%- for post in collections.blogPost %}
     <li>
       <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
-      <p>{{ post.templateContent | timeToRead }}</p>
+      <p>{{ post.content | timeToRead }}</p>
     </li>
   {%- endfor %}
 </ul>

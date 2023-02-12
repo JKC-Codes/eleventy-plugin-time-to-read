@@ -38,6 +38,9 @@ test('only accepts string or template', t => {
 	t.notThrows(()=> {
 		measureTime({foo: 'bar', templateContent: 'baz'})
 	});
+	t.notThrows(()=> {
+		measureTime({foo: 'bar', content: 'baz'})
+	});
 
 	t.throws(()=> {
 		measureTime(123)

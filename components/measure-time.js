@@ -1,7 +1,7 @@
 const regEx = require('./regular-expressions.js');
 
-module.exports = function(content, options) {
-	const text = convertToPlainText(content);
+module.exports = function(page, options) {
+	const text = convertToPlainText(page);
 	const parsedSpeed = parseSpeedOption(options.speed);
 	const counts = getCounts(text);
 	const totalSeconds = getTotalSeconds(counts, parsedSpeed);
@@ -36,8 +36,8 @@ module.exports = function(content, options) {
 }
 
 
-function convertToPlainText(content) {
-	const html = content.templateContent || content;
+function convertToPlainText(page) {
+	const html = page.content || page.templateContent || page;
 
 	if(typeof html !== 'string') {
 		throw new Error("Time-to-read's input must be a string or template");
