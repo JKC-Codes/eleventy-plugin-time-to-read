@@ -45,8 +45,8 @@
 	},
 	"devDependencies": {
 		"@11ty/eleventy": "^2.0.0",
-		"ava": "^5.0.0",
-		"concurrently": "^7.0.0"
+		"ava": "^6.0.0",
+		"concurrently": "^8.0.0"
 	},
 	"peerDependencies": {
 		"@11ty/eleventy": "*"
